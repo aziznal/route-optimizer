@@ -68,9 +68,7 @@ def load_map(to_filename="default-map-buildings.p"):
         return []
 
 
-def run(*draw_functions):
-
-    global building_manager
+def run(building_manager, *draw_functions):
 
     screen = get_screen()
 
@@ -90,26 +88,6 @@ def run(*draw_functions):
 
         pygame.display.flip()
 
-
-def create_konya():
-
-    buildings = [
-
-        Building(78, 200, connections=[1, 2]),
-
-        Building(135, 300, connections=[0, 2]),
-
-        Building(275, 400, connections=[0, 1]),
-
-        Building(360, 135, connections=[0, 1, 2]),
-
-    ]
-
-    streets = building_manager.create_streets_between_buildings(buildings)
-
-    konya = City(buildings, streets)
-
-    return konya
 
 
 if __name__ == '__main__':
@@ -132,6 +110,12 @@ if __name__ == '__main__':
 
 
     run(
+
+        building_manager,
+
+        ### Drawing methods below here
+
         # mapmaker.draw,
         konya.draw
+
     )
