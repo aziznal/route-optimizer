@@ -20,37 +20,16 @@ class Street(Arc):
 
         self.arrow_surface = self.create_arrow_surface()
 
+        self.start_pos, self.end_pos = self._get_line_start_and_end()
+
 
     def create_arrow_surface(self):
-        
-        # TODO: replace this f**kery with a simple image of an arrow instead
 
-        arrow_surface = pygame.Surface((20, 20), pygame.SRCALPHA)
-        arrow_surface.fill((255, 255, 255))
-
-
-        x, y = self.node2.x, self.node2.y
-
-        norm_x, norm_y = x * 20 / SCREEN_WIDTH, y * 20 / SCREEN_HEIGHT
-        
-        scale = 10
-
+        arrow_surface = pygame.image.load(Resources.ARROW_IMAGE_PATH)
+        arrow_surface = pygame.transform.scale(arrow_surface, (10, 10))
 
         rotation_angle = self.angle
-        rotation_coef = scale * (2**0.5 / 2)
 
-        print(f"Rotation Angle: {rotation_angle}")
-
-        points = [
-            
-            (norm_x - rotation_coef, norm_y + rotation_coef),
-            (norm_x, norm_y),
-            (norm_x - rotation_coef, norm_y - rotation_coef)
-
-        ]
-
-        # An arrow is just a triangle. That's easy enough to draw
-        pygame.draw.polygon(arrow_surface, Colors.BLUE, points)
         arrow_surface = pygame.transform.rotate(arrow_surface, rotation_angle)
 
         return arrow_surface
@@ -60,14 +39,53 @@ class Street(Arc):
         screen.blit(self.arrow_surface, (self.node2.x, self.node2.y))
 
 
+
+    def _adjust_line_end(self, end_x, end_y):
+
+        dx = NODE_RADIUS * np.cos(self.angle)
+        dy = NODE_RADIUS * np.sin(self.angle)
+        
+        quadrant = self.get_quadrant_of_node2()
+        
+        print(f"angle: {self.angle}\tquadrant: {quadrant}\n\n")
+
+        if quadrant == 1:
+            end_x -= dx
+            end_y += dy
+        
+        elif quadrant == 2:
+            end_x -= dx
+            end_y += dy
+
+        elif quadrant == 3:
+            end_x -= dx
+            end_y += dy
+
+        elif quadrant == 4:
+            end_x -= dx
+            end_y += dy
+
+
+        return end_x, end_y
+
+    def _get_line_start_and_end(self):
+
+        start_x, start_y = self.node1.x + NODE_RADIUS//2, self.node1.y + NODE_RADIUS//2
+        end_x, end_y = self.node2.x + NODE_RADIUS//2, self.node2.y + NODE_RADIUS//2
+
+        # Move end x and end y back along the line to place the arrows better
+        # end_x, end_y = self._adjust_line_end(end_x, end_y)
+
+        return (start_x, start_y), (end_x, end_y)
+
+
     def draw(self, screen: pygame.Surface):
 
-        pygame.draw.line(
+        pygame.draw.aaline(
             screen,
             Colors.BLACK,
-            start_pos=(self.node1.x + NODE_RADIUS//2, self.node1.y + NODE_RADIUS//2),
-            end_pos=(self.node2.x + NODE_RADIUS//2, self.node2.y + NODE_RADIUS//2),
-            width=2
+            start_pos=self.start_pos,
+            end_pos=self.end_pos
         )
 
         if self.show_arrows:

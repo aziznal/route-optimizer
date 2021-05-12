@@ -27,7 +27,7 @@ def _handle_mouse_events(events, on_mouse_left_click, on_mouse_right_click, on_m
             elif event.button == MouseInputType.RIGHT_CLICK:
 
                 if mouse_already_right_clicked:
-                    on_mouse_right_click(prev_mouse_pos, mouse_pos, bidirectional=True, verbose=False)
+                    on_mouse_right_click(prev_mouse_pos, mouse_pos, bidirectional=False, verbose=False)
                     mouse_already_right_clicked = False
 
                 else:

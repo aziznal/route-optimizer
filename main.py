@@ -28,7 +28,7 @@ buildings = []
 streets = []
 
 
-# BUG: all connections between buildings are becoming bidirectional after loading a saved map
+# BUG: Bi-directional connections are not visualized until the map is reloaded
 
 
 def create_text(text, font_size, color, bold=False):
@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
 
 
-    img = pygame.image.load("./konya_map.png")
+    img = pygame.image.load(Resources.KONYA_MAP_PATH)
 
     mapmaker = MapMaker(map_image=img)
 

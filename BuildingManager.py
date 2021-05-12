@@ -44,14 +44,26 @@ class BuildingManager:
 
 
 
-    def _disconnect_building_from_all_others(self, building_to_remove):
+    def _remove_connections(self, building_to_remove):
 
+        # Remove connections FROM building_to_delete
         for connected_building in building_to_remove.connections:
             try:
                 connected_building.connections.remove(building_to_remove)
 
             except ValueError:
                 traceback.print_exc()
+
+        # Remove connections TO building_to_delete
+        for potentailly_connected_building in self.buildings:
+            try:
+                if building_to_remove in potentailly_connected_building.connections:
+                    potentailly_connected_building.connections.remove(building_to_remove)
+
+            except ValueError:
+                traceback.print_exc()
+
+
                 
 
     def remove_building(self, pos):
@@ -62,7 +74,7 @@ class BuildingManager:
             print(f"No building to remove at {pos}")
             return
 
-        self._disconnect_building_from_all_others(building_to_remove)
+        self._remove_connections(building_to_remove)
 
         self.buildings.remove(building_to_remove)
 
@@ -118,7 +130,7 @@ class BuildingManager:
 
     def create_streets_between_buildings(self):
         
-        # BUG: Loading a saved map causes all connections to be bi-directional
+        # BUG: Bi-directional connections aren't being drawn until the map is reloaded
 
         for building in self.buildings:
 
@@ -129,6 +141,7 @@ class BuildingManager:
                         building, connected_building
                     )
                 )
+
 
 
 

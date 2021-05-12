@@ -31,3 +31,10 @@ class MouseInputType:
     SCROLL_UP = 4
 
     SCROLL_DOWN = 5
+
+
+class Resources:
+
+    ARROW_IMAGE_PATH = "./arrow.png"
+
+    KONYA_MAP_PATH = "./konya_map.png"
