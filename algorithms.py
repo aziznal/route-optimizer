@@ -31,6 +31,12 @@ class Dijkstra(Algorithm):
         super().__init__(*args, **kwargs)
 
 
+class Johnson(Algorithm):
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+
 class TravelingSalesman(Algorithm):
 
     def __init__(self, *args, **kwargs) -> None:
