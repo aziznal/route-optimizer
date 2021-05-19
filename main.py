@@ -20,6 +20,9 @@ from PygameSettings import *
 from EventHandler import handle_events
 
 
+from algorithms import A_star
+
+
 pygame.init()
 pygame.font.init()
 
@@ -108,6 +111,7 @@ if __name__ == '__main__':
 
     konya = City(buildings=buildings, streets=streets)
 
+    solution = A_star(buildings)
 
     run(
 
