@@ -12,7 +12,7 @@ from Street import Street
 # REFACTOR: tidy up before you get further in the project
 
 class BuildingManager:
-    def __init__(self, buildings_list: List[Building], streets: List[Street], on_change: Callable[str]):
+    def __init__(self, buildings_list: List[Building], streets: List[Street], on_change: Callable):
 
         self.buildings = buildings_list
         self.streets = streets
