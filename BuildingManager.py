@@ -1,5 +1,6 @@
 
 import traceback
+from typing import List, Callable, Tuple
 
 from PygameSettings import *
 
@@ -11,7 +12,7 @@ from Street import Street
 # REFACTOR: tidy up before you get further in the project
 
 class BuildingManager:
-    def __init__(self, buildings_list, streets, on_change):
+    def __init__(self, buildings_list: List[Building], streets: List[Street], on_change: Callable[str]):
 
         self.buildings = buildings_list
         self.streets = streets
@@ -20,7 +21,7 @@ class BuildingManager:
 
 
 
-    def get_building_at_pos(self, pos):
+    def get_building_at_pos(self, pos: Tuple[int, int]) -> Building:
         """
         Returns building at given position, if any exists. Otherwise returns None
         """
@@ -32,7 +33,7 @@ class BuildingManager:
 
 
 
-    def make_building(self, pos):
+    def make_building(self, pos: Tuple[int, int]) -> None:
 
         new_building_pos = (pos[0] - NODE_RADIUS//2, pos[1] - NODE_RADIUS//2)
 
@@ -44,7 +45,7 @@ class BuildingManager:
 
 
 
-    def _remove_connections(self, building_to_remove):
+    def _remove_connections(self, building_to_remove: Building) -> None:
 
         # Remove connections FROM building_to_delete
         for connected_building in building_to_remove.connections:
@@ -64,9 +65,8 @@ class BuildingManager:
                 traceback.print_exc()
 
 
-                
 
-    def remove_building(self, pos):
+    def remove_building(self, pos: Tuple[int, int]) -> None:
 
         building_to_remove = self.get_building_at_pos(pos)
 
@@ -96,7 +96,7 @@ class BuildingManager:
 
 
 
-    def connect_buildings(self, pos1, pos2, bidirectional=False, verbose=True):
+    def connect_buildings(self, pos1: Tuple[int, int], pos2: Tuple[int, int], bidirectional=False, verbose=True) -> None:
         """
         Create a one-way or two-way connection between nodes at pos1 and pos2
         """
@@ -128,7 +128,7 @@ class BuildingManager:
 
 
 
-    def create_streets_between_buildings(self):
+    def create_streets_between_buildings(self) -> None:
         
         # BUG: Bi-directional connections aren't being drawn until the map is reloaded
 
@@ -145,11 +145,10 @@ class BuildingManager:
 
 
 
-    def draw_street(self, building1, building2):
+    def draw_street(self, building1: Building, building2: Building):
         
         new_street = Street(building1, building2)
 
         self.streets.append(new_street)
 
         self.on_change()
-

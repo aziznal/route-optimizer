@@ -5,10 +5,12 @@ An Arc is a *directional* connection between two Nodes
 """
 
 import numpy as np
+from .Node import Node
 
+from typing import Literal
 
 class Arc:
-    def __init__(self, node1, node2):
+    def __init__(self, node1: Node, node2: Node):
 
         self.node1, self.node2 = node1, node2
 
@@ -20,7 +22,7 @@ class Arc:
         self.length = self.calculate_length()
 
     
-    def calculate_length(self):
+    def calculate_length(self) -> float:
 
         length_squared = (
             (self.node1.x - self.node2.x)**2 + (self.node1.y - self.node2.y)**2
@@ -29,7 +31,7 @@ class Arc:
         return length_squared ** 0.5        
 
 
-    def calculate_slope(self):
+    def calculate_slope(self) -> float:
 
         x1, x2 = self.node1.x, self.node2.x
         y1, y2 = self.node1.y, self.node2.y
@@ -45,7 +47,7 @@ class Arc:
         return -delta_y / delta_x
 
 
-    def get_quadrant_of_node2(self):
+    def get_quadrant_of_node2(self) -> Literal[1, 2, 3, 4]:
         """
         Returns quadrant of node2 in reference to node1 based on the unit circle.
         Note: This takes into account the pygame cartesian coordinate system behavior.
@@ -79,7 +81,7 @@ class Arc:
 
 
 
-    def _adjust_for_quadrant(self, angle_in_radians):
+    def _adjust_for_quadrant(self, angle_in_radians: float) -> float:
 
         quadrant = self.get_quadrant_of_node2()
 
@@ -94,7 +96,7 @@ class Arc:
 
         return angle_in_radians
 
-    def calculate_angle(self, in_radians=False):
+    def calculate_angle(self, in_radians=False) -> float:
 
         """
         Note: angle is calculated according to positive x-axis

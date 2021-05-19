@@ -13,11 +13,11 @@ class Colors:
 
     WHITE = 255, 255, 255
 
-    RED = 255, 0, 0
+    RED = 255, 77, 54
 
-    GREEN = 0, 255, 0
+    GREEN = 79, 255, 129
 
-    BLUE = 0, 0, 255
+    BLUE = 61, 126, 255
 
 
 class MouseInputType:
