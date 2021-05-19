@@ -15,12 +15,12 @@ import pygame
 
 class City:
 
-    def __init__(self, buildings: List[Building], streets: List[Street]):
+    def __init__(self, buildings: List[Building], streets: List[Street]) -> None:
 
         self.buildings = buildings
         self.streets = streets
 
-    def draw(self, screen: pygame.Surface):
+    def draw(self, screen: pygame.Surface) -> None:
 
         for building in self.buildings:
             building.draw(screen)

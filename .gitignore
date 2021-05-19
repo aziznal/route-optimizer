@@ -2,6 +2,7 @@
 ### Directories
 venv
 __pycache__/
+.vscode
 
 
 ### Files

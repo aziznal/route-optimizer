@@ -7,10 +7,10 @@ An Arc is a *directional* connection between two Nodes
 import numpy as np
 from .Node import Node
 
-from typing import Literal
+from typing import Literal, Union
 
 class Arc:
-    def __init__(self, node1: Node, node2: Node):
+    def __init__(self, node1: Node, node2: Node) -> None:
 
         self.node1, self.node2 = node1, node2
 
@@ -23,6 +23,9 @@ class Arc:
 
     
     def calculate_length(self) -> float:
+        """
+        Returns length of Arc connecting the two nodes
+        """
 
         length_squared = (
             (self.node1.x - self.node2.x)**2 + (self.node1.y - self.node2.y)**2
@@ -31,7 +34,10 @@ class Arc:
         return length_squared ** 0.5        
 
 
-    def calculate_slope(self) -> float:
+    def calculate_slope(self) -> Union[float]:
+        """
+        Calculates and retuns slope of line connecting the two nodes
+        """
 
         x1, x2 = self.node1.x, self.node2.x
         y1, y2 = self.node1.y, self.node2.y

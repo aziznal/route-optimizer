@@ -13,7 +13,7 @@ pygame.font.init()
 
 class MapMaker:
 
-    def __init__(self, map_image):
+    def __init__(self, map_image: pygame.Surface) -> None:
 
         self.map_image = map_image
 
@@ -22,6 +22,6 @@ class MapMaker:
 
     
 
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         screen.blit(self.map_image, (0, 0))
 

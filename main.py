@@ -20,7 +20,6 @@ from PygameSettings import *
 from EventHandler import handle_events
 
 
-from algorithms import A_star
 
 
 pygame.init()
@@ -111,7 +110,6 @@ if __name__ == '__main__':
 
     konya = City(buildings=buildings, streets=streets)
 
-    solution = A_star(buildings)
 
     run(
 
@@ -119,7 +117,7 @@ if __name__ == '__main__':
 
         ### Drawing methods below here
 
-        # mapmaker.draw,
+        mapmaker.draw,
         konya.draw
 
     )

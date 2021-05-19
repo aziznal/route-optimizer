@@ -1,4 +1,5 @@
 
+from typing import Tuple
 
 from BaseClasses.Arc import Arc
 
@@ -13,7 +14,7 @@ import numpy as np
 
 class Street(Arc):
 
-    def __init__(self, *args, show_arrows=True):
+    def __init__(self, *args, show_arrows: bool=True) -> None:
         super().__init__(*args)
 
         self.show_arrows = show_arrows
@@ -23,7 +24,7 @@ class Street(Arc):
         self.start_pos, self.end_pos = self._get_line_start_and_end()
 
 
-    def create_arrow_surface(self):
+    def create_arrow_surface(self) -> pygame.Surface:
 
         arrow_surface = pygame.image.load(Resources.ARROW_IMAGE_PATH)
         arrow_surface = pygame.transform.scale(arrow_surface, (10, 10))
@@ -35,12 +36,12 @@ class Street(Arc):
         return arrow_surface
 
 
-    def draw_arrow(self, screen):
+    def draw_arrow(self, screen: pygame.Surface) -> None:
         screen.blit(self.arrow_surface, (self.node2.x, self.node2.y))
 
 
 
-    def _adjust_line_end(self, end_x, end_y):
+    def _adjust_line_end(self, end_x: int, end_y: int) -> Tuple[int, int]:
 
         dx = NODE_RADIUS * np.cos(self.angle)
         dy = NODE_RADIUS * np.sin(self.angle)
@@ -68,7 +69,7 @@ class Street(Arc):
 
         return end_x, end_y
 
-    def _get_line_start_and_end(self):
+    def _get_line_start_and_end(self) -> Tuple[ Tuple[int, int], Tuple[int, int] ]:
 
         start_x, start_y = self.node1.x + NODE_RADIUS//2, self.node1.y + NODE_RADIUS//2
         end_x, end_y = self.node2.x + NODE_RADIUS//2, self.node2.y + NODE_RADIUS//2
@@ -79,7 +80,7 @@ class Street(Arc):
         return (start_x, start_y), (end_x, end_y)
 
 
-    def draw(self, screen: pygame.Surface):
+    def draw(self, screen: pygame.Surface) -> None:
 
         pygame.draw.aaline(
             screen,

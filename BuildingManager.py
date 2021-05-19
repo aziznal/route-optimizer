@@ -12,7 +12,7 @@ from Street import Street
 # REFACTOR: tidy up before you get further in the project
 
 class BuildingManager:
-    def __init__(self, buildings_list: List[Building], streets: List[Street], on_change: Callable):
+    def __init__(self, buildings_list: List[Building], streets: List[Street], on_change: Callable) -> None:
 
         self.buildings = buildings_list
         self.streets = streets
@@ -34,6 +34,9 @@ class BuildingManager:
 
 
     def make_building(self, pos: Tuple[int, int]) -> None:
+        """
+        Creates a building at the given position
+        """
 
         new_building_pos = (pos[0] - NODE_RADIUS//2, pos[1] - NODE_RADIUS//2)
 
@@ -46,6 +49,9 @@ class BuildingManager:
 
 
     def _remove_connections(self, building_to_remove: Building) -> None:
+        """
+        Removes all connections to / from given building
+        """
 
         # Remove connections FROM building_to_delete
         for connected_building in building_to_remove.connections:
@@ -67,6 +73,10 @@ class BuildingManager:
 
 
     def remove_building(self, pos: Tuple[int, int]) -> None:
+        """
+        Removes building at given position (if any exists) and cuts off all connections
+        to / from it
+        """
 
         building_to_remove = self.get_building_at_pos(pos)
 
@@ -129,7 +139,10 @@ class BuildingManager:
 
 
     def create_streets_between_buildings(self) -> None:
-        
+        """
+        Creates directed Arcs between all connected buildings
+        """
+
         # BUG: Bi-directional connections aren't being drawn until the map is reloaded
 
         for building in self.buildings:
@@ -145,7 +158,10 @@ class BuildingManager:
 
 
 
-    def draw_street(self, building1: Building, building2: Building):
+    def draw_street(self, building1: Building, building2: Building) -> None:
+        """
+        Creates an Arc between the two given buildings
+        """
         
         new_street = Street(building1, building2)
 
