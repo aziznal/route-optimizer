@@ -4,7 +4,6 @@ from MapMaker import MapMaker
 from City import City
 
 
-
 from PygameSettings import *
 from EventHandler import handle_events
 
@@ -18,6 +17,7 @@ streets = []
 
 
 # BUG: Bi-directional connections are not visualized until the map is reloaded
+# TODO: Stop pickling maps. Load data and re-instantiate nodes from it instead.
 
 
 def get_screen() -> pygame.Surface:
@@ -27,7 +27,7 @@ def get_screen() -> pygame.Surface:
     return screen
 
 
-def run(city: City, *draw_functions) -> None:
+def run(city: City, draw_functions) -> None:
 
     screen = get_screen()
 
@@ -47,9 +47,6 @@ if __name__ == '__main__':
 
     buildings = utils.load_map()
 
-    map_image = pygame.image.load(Resources.KONYA_MAP_IMAGE_PATH)
-    mapmaker = MapMaker(map_image=map_image)
-
     konya = City(
         buildings=buildings,
         streets=streets,
@@ -57,13 +54,16 @@ if __name__ == '__main__':
     )
     konya.create_streets_between_buildings()
 
+    map_image = pygame.image.load(Resources.KONYA_MAP_IMAGE_PATH)
+    mapmaker = MapMaker(map_image=map_image)
+
     run(
 
-        konya,
+        city=konya,
 
-        # Drawing methods below here
-
-        # mapmaker.draw,
-        konya.draw
+        draw_functions=[
+            # mapmaker.draw,
+            konya.draw
+        ]
 
     )
