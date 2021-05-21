@@ -13,3 +13,11 @@ class Node:
     def __init__(self, x: int, y: int, connections: List[Node]):
 
         self.x, self.y, self.connections = x, y, connections
+
+    def __hash__(self) -> int:
+        # NOTE: MUST implement better hash algorithm here. There may be a chance of nodes having the same hash
+        return hash((self.x)**2 + (self.y + 1)**2)
+
+
+    def __str__(self) -> str:
+        return f"Node({self.x}, {self.y})"
