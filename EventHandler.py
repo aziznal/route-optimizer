@@ -1,7 +1,7 @@
 from City import City
 import pygame
 
-from typing import Callable, List, Tuple, Optional
+from typing import List, Tuple
 
 from PygameSettings import MouseInputType
 
@@ -13,11 +13,15 @@ prev_mouse_pos: Tuple[int, int] = None
 
 
 def _handle_mouse_events(events: List[pygame.event.Event], city: City) -> None:
+    """
+    events: List of events at current timepoint
+
+    city: City class which can create/remove/connect buildings
+    """
 
     global mouse_already_right_clicked
     global prev_mouse_pos
 
-    mouse_event = pygame.mouse.get_pressed(num_buttons=3)
     mouse_pos = pygame.mouse.get_pos()
 
     for event in events:
@@ -49,6 +53,9 @@ def _handle_mouse_events(events: List[pygame.event.Event], city: City) -> None:
 
 
 def _handle_quit_events(events: List[pygame.event.Event]) -> None:
+    """
+    events: List of events at current timepoint
+    """
 
     for event in events:
 
@@ -60,6 +67,12 @@ def _handle_quit_events(events: List[pygame.event.Event]) -> None:
 
 
 def handle_events(city: City) -> None:
+    """
+    city: City class which can create/remove/connect buildings
+
+    This function calls all other event handler functions in EventHandler and passes an events (pygame.event.Event) object to them
+
+    """
 
     events = pygame.event.get()
 
