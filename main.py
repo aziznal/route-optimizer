@@ -3,7 +3,7 @@ from MapMaker import MapMaker
 
 from City import City
 
-from BuildingManager import BuildingManager
+from BuildingManager import CityManager
 
 
 from PygameSettings import *
@@ -28,15 +28,15 @@ def get_screen() -> pygame.Surface:
     return screen
 
 
-def run(building_manager, *draw_functions) -> None:
+def run(city: City, *draw_functions) -> None:
 
     screen = get_screen()
 
     while 1:
         handle_events(
-            on_mouse_left_click=building_manager.make_building,
-            on_mouse_right_click=building_manager.connect_buildings,
-            on_mouse_middle_click=building_manager.remove_building,
+            on_mouse_left_click=city.create_building,
+            on_mouse_right_click=city.connect_buildings,
+            on_mouse_middle_click=city.remove_building,
             on_mouse_scroll=lambda dir, pos: print(f"scroll {dir}"),
         )
 
@@ -53,21 +53,19 @@ if __name__ == '__main__':
 
     buildings = utils.load_map()
 
-    building_manager = BuildingManager(
-        buildings,
-        streets,
-        lambda: utils.save_changes(buildings)
-    )
-    building_manager.create_streets_between_buildings()
-
     img = pygame.image.load(Resources.KONYA_MAP_PATH)
     mapmaker = MapMaker(map_image=img)
 
-    konya = City(buildings=buildings, streets=streets)
+    konya = City(
+        buildings=buildings,
+        streets=streets,
+        on_change=lambda: utils.save_changes(buildings)
+    )
+    konya.create_streets_between_buildings()
 
     run(
 
-        building_manager,
+        konya,
 
         # Drawing methods below here
 
