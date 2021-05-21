@@ -1,4 +1,3 @@
-
 from MapMaker import MapMaker
 from typing import List
 
@@ -12,18 +11,12 @@ import pickle
 
 import traceback
 
-
-import pygame
-from pygame.locals import *
+from algorithms import Dijkstra
 
 from PygameSettings import *
 from EventHandler import handle_events
 
-
-
-
-pygame.init()
-pygame.font.init()
+from utils import *
 
 
 buildings = []
@@ -109,6 +102,12 @@ if __name__ == '__main__':
 
 
     konya = City(buildings=buildings, streets=streets)
+
+
+    # TODO: remove this after finding better hashing function for nodes
+    confirm_hashes_are_unique(buildings)
+
+    solution = Dijkstra(buildings).find_shortest_path(buildings[0], buildings[1])
 
 
     run(
