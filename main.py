@@ -32,12 +32,7 @@ def run(city: City, *draw_functions) -> None:
     screen = get_screen()
 
     while 1:
-        handle_events(
-            on_mouse_left_click=city.create_building,
-            on_mouse_right_click=city.connect_buildings,
-            on_mouse_middle_click=city.remove_building,
-            on_mouse_scroll=lambda dir, pos: print(f"scroll {dir}"),
-        )
+        handle_events(city)
 
         screen.fill(Colors.WHITE)
 
