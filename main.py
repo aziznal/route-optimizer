@@ -3,7 +3,6 @@ from MapMaker import MapMaker
 
 from City import City
 
-from BuildingManager import CityManager
 
 
 from PygameSettings import *
