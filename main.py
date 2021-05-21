@@ -47,8 +47,8 @@ if __name__ == '__main__':
 
     buildings = utils.load_map()
 
-    img = pygame.image.load(Resources.KONYA_MAP_PATH)
-    mapmaker = MapMaker(map_image=img)
+    map_image = pygame.image.load(Resources.KONYA_MAP_IMAGE_PATH)
+    mapmaker = MapMaker(map_image=map_image)
 
     konya = City(
         buildings=buildings,

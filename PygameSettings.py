@@ -35,6 +35,7 @@ class MouseInputType:
 
 class Resources:
 
-    ARROW_IMAGE_PATH = "./arrow.png"
+    ARROW_IMAGE_PATH = "./assets/arrow.png"
 
-    KONYA_MAP_PATH = "./konya_map.png"
+    KONYA_MAP_IMAGE_PATH = "./assets/konya_map.png"
+
