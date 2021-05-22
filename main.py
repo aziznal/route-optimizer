@@ -1,15 +1,17 @@
+import pygame
+
+import utils
+
+from PygameSettings import *
+from EventHandler import handle_events
+
 from Building import Building
 from MapMaker import MapMaker
 
 from City import City
 
 
-from PygameSettings import *
-from EventHandler import handle_events
-
-import utils
-
-import pygame
+from algorithms import Dijkstra
 
 
 buildings = []
@@ -56,6 +58,16 @@ if __name__ == '__main__':
 
     map_image = pygame.image.load(Resources.KONYA_MAP_IMAGE_PATH)
     mapmaker = MapMaker(map_image=map_image)
+    
+    # NOTE: This will throw an error if you don't have the correct map loaded
+    dijk = Dijkstra(buildings)
+    solution = dijk.find_shortest_path(
+        source_node= konya.get_building_at_pos((259, 311)),
+        destination_node=konya.get_building_at_pos((437, 254))
+    )
+
+    print("\nFound shortest path to be the following: ")
+    [print(node) for node in solution]
 
     run(
 
