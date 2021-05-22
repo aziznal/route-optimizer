@@ -19,6 +19,8 @@ class Colors:
 
     BLUE = 61, 126, 255
 
+    YELLOW = 230, 192, 0
+
 
 class MouseInputType:
 

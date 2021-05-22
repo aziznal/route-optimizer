@@ -13,8 +13,11 @@ import numpy as np
 
 class Street(Arc):
 
-    def __init__(self, *args, show_arrows: bool = True) -> None:
+    def __init__(self, *args, show_arrows: bool = True, color: Colors, width: int) -> None:
         super().__init__(*args)
+
+        self.color = color
+        self.width = width
 
         self.show_arrows = show_arrows
 
@@ -75,12 +78,21 @@ class Street(Arc):
 
     def draw(self, screen: pygame.Surface) -> None:
 
-        pygame.draw.aaline(
-            screen,
-            Colors.BLACK,
-            start_pos=self.start_pos,
-            end_pos=self.end_pos
-        )
+        if self.width == 1:
+            pygame.draw.aaline(
+                screen,
+                self.color,
+                start_pos=self.start_pos,
+                end_pos=self.end_pos
+            )
+        else:
+            pygame.draw.line(
+                screen,
+                self.color,
+                start_pos=self.start_pos,
+                end_pos=self.end_pos,
+                width=self.width
+            )
 
         if self.show_arrows:
             self.draw_arrow(screen)

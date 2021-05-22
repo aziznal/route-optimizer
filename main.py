@@ -62,12 +62,14 @@ if __name__ == '__main__':
     # NOTE: This will throw an error if you don't have the correct map loaded
     dijk = Dijkstra(buildings)
     solution = dijk.find_shortest_path(
-        source_node= konya.get_building_at_pos((259, 311)),
-        destination_node=konya.get_building_at_pos((437, 254))
+        source_node= konya.get_building_at_pos((520, 46)),
+        destination_node=konya.get_building_at_pos((645, 782))
     )
 
     print("\nFound shortest path to be the following: ")
     [print(node) for node in solution]
+
+    konya.color_paths(solution)
 
     run(
 

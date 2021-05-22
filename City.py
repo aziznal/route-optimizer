@@ -152,17 +152,25 @@ class City:
 
                 self.streets.append(
                     Street(
-                        building, connected_building
+                        building, connected_building, show_arrows=True, color=Colors.BLACK, width=1
                     )
                 )
 
-    def draw_street(self, building1: Building, building2: Building) -> None:
+    def draw_street(self, building1: Building, building2: Building, color: Colors = Colors.BLACK, width: int = 1) -> None:
         """
         Creates an Arc between the two given buildings
         """
 
-        new_street = Street(building1, building2)
+        new_street = Street(building1, building2, show_arrows=True, color=color, width=width)
 
         self.streets.append(new_street)
 
         self.on_change()
+
+    def color_paths(self, nodes: List[Building]) -> None:
+        """
+        Colors a path starting from first node until last node in the
+        given list
+        """
+        for node1, node2 in  zip(nodes[:-1], nodes[1:]):
+            self.draw_street(node1, node2, Colors.YELLOW, width=3)
