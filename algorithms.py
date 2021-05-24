@@ -1,4 +1,6 @@
 
+from Street import Street
+from Building import Building
 from typing import Union, List, Dict
 
 from City import City
@@ -14,7 +16,7 @@ class Algorithm:
         self.nodes = nodes
 
     
-    def find_shortest_path(self, first_point: Node, second_point: Node) -> List[Node]:
+    def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
         raise NotImplementedError("Method has not been implemented yet.")
 
 
@@ -23,6 +25,131 @@ class A_star(Algorithm):
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+
+    def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
+
+        self.source_node = source_node
+        self.destination_node = destination_node
+
+        # To help with returning the result of the algorithm (TODO: give better explanation)
+        self.prev_node: Dict[Node, Node] = {}
+        
+        self.open_set: List[Node] = []
+        # self.unvisited: List[Node] = [node for node in self.nodes if node != self.source_node]
+
+        # Starting node is present in visited list from the start
+        self.open_set.append(self.source_node)
+        self.current_node = self.source_node
+
+        # No node comes before the starting node, so set it to none
+        self.prev_node[self.source_node] = None
+
+        
+        # To save distance from source node to current node:
+        self.g_scores = self.get_initial_distances()
+        
+        self.f_scores = self.get_initial_distances()
+        self.f_scores[self.source_node] = self.h_cost(self.source_node)
+
+
+        while True:
+
+            if self.check_satisfies_exit_condition():
+                break
+
+            self.open_set.remove(self.current_node)
+
+            for neighbor in self.current_node.connections:
+
+                neighbor_new_g_score = self.g_scores[self.current_node] + A_star.get_distance_between_nodes(self.current_node, neighbor)
+
+                if neighbor_new_g_score < self.g_scores[neighbor]:
+
+                    self.prev_node[neighbor] = self.current_node
+
+                    self.g_scores[neighbor] = neighbor_new_g_score
+                    self.f_scores[neighbor] = self.g_scores[neighbor] + self.h_cost(neighbor)
+
+                    if neighbor not in self.open_set:
+                        self.open_set.append(neighbor)
+
+            self.current_node = self.get_node_with_lowest_f_score()
+
+
+        return self.construct_path()
+    
+    def f_cost(self, node):
+        pass
+
+    def g_cost(self):
+        """
+        length of path from starting node to current node
+        """
+        pass
+
+    def h_cost(self, node: Node):
+        """
+        length of 'direct' path from given node to destination node
+        """
+        return A_star.get_distance_between_nodes(node, self.destination_node, connected=False)
+
+
+    def get_initial_distances(self) -> Dict[Node, Union[float, int]]:
+        """
+        Returns a map of distances from initial node, all set to
+        infinity except for the source node
+        """
+        distances = { node: np.inf for node in self.nodes }
+
+        # Source Node has distance 0 with itself
+        distances[self.source_node] = 0
+        
+        return distances
+
+
+    def get_node_with_lowest_f_score(self):
+        """
+        Return the current node's neighboring node with the least f_cost
+        """
+
+        open_set_f_scores = { node: self.f_scores[node] for node in self.open_set }
+
+        return min(open_set_f_scores, key=open_set_f_scores.get)
+
+
+    def check_satisfies_exit_condition(self):
+
+        return any([
+
+            self.current_node == self.destination_node,
+
+            len(self.open_set) == 0
+
+        ])
+
+    @staticmethod
+    def get_distance_between_nodes(node1: Node, node2: Node, connected=True) -> float:
+
+        if connected:
+            assert node2 in node1.connections
+
+        return Arc(node1, node2).calculate_length()
+
+
+    def construct_path(self):
+
+        shortest_path: List[Node] = []
+        u = self.destination_node
+
+        while u is not None:
+            shortest_path.append(u)
+            u = self.prev_node[u]
+
+        shortest_path.reverse()
+
+        return shortest_path
+        
+
 
 
 class Dijkstra(Algorithm):

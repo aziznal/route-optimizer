@@ -11,7 +11,7 @@ from MapMaker import MapMaker
 from City import City
 
 
-from algorithms import Dijkstra
+from algorithms import A_star, Dijkstra
 
 
 buildings = []
@@ -46,11 +46,7 @@ def run(city: City, draw_functions) -> None:
 
 if __name__ == '__main__':
 
-    # Simple map of konya
-    # path_to_map_file = "./assets/konya_map.p"
-
-    path_to_map_file = "default-map.json"
-
+    path_to_map_file = "./assets/konya-map.json"
 
     buildings_data = utils.load_map(to_filename=path_to_map_file)
     buildings = City.make_buildings_from_saved_file(buildings_data)
@@ -63,6 +59,26 @@ if __name__ == '__main__':
     )
     konya.create_streets_between_buildings()
 
+    # solution = Dijkstra(konya.buildings).find_shortest_path(
+    #     source_node=konya.get_building_at_pos((369, 92)),
+    #      destination_node=konya.get_building_at_pos((373, 709)),
+    # )
+
+
+
+
+    # solution = A_star(konya.buildings).find_shortest_path(
+    #     source_node=konya.get_building_at_pos((369, 92)),
+    #     destination_node=konya.get_building_at_pos((373, 709)),
+    # )
+
+    solution = A_star(konya.buildings).find_shortest_path(
+        source_node=konya.get_building_at_pos((518, 45)),
+        destination_node=konya.get_building_at_pos((645, 772)),
+    )
+
+    konya.color_paths(solution)
+
     map_image = pygame.image.load(Resources.KONYA_MAP_IMAGE_PATH)
     mapmaker = MapMaker(map_image=map_image)
 
@@ -71,7 +87,7 @@ if __name__ == '__main__':
         city=konya,
 
         draw_functions=[
-            # mapmaker.draw,
+            mapmaker.draw,
             konya.draw
         ]
 
