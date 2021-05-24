@@ -47,30 +47,24 @@ def run(city: City, draw_functions) -> None:
 
 if __name__ == '__main__':
 
-    buildings = utils.load_map()
+    # Simple map of konya
+    # path_to_map_file = "./assets/konya_map.p"
+
+    path_to_map_file = "default-map.p"
+
+
+    buildings = utils.load_map(to_filename=path_to_map_file)
 
     konya = City(
         buildings=buildings,
         streets=streets,
-        on_change=lambda: utils.save_changes(buildings)
+        on_change=lambda: utils.save_changes(buildings, map_name=path_to_map_file)
     )
     konya.create_streets_between_buildings()
 
     map_image = pygame.image.load(Resources.KONYA_MAP_IMAGE_PATH)
     mapmaker = MapMaker(map_image=map_image)
     
-    # NOTE: This will throw an error if you don't have the correct map loaded
-    dijk = Dijkstra(buildings)
-    solution = dijk.find_shortest_path(
-        source_node= konya.get_building_at_pos((520, 46)),
-        destination_node=konya.get_building_at_pos((645, 782))
-    )
-
-    print("\nFound shortest path to be the following: ")
-    [print(node) for node in solution]
-
-    konya.color_paths(solution)
-
     run(
 
         city=konya,
