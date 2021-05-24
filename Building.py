@@ -15,7 +15,7 @@ class Building(Node):
         super().__init__(*args, **kwargs)
 
         self.rect = pygame.Rect(self.x, self.y, NODE_RADIUS, NODE_RADIUS)
-        self.text = {"text":f"({self.rect.x}, {self.rect.y})", "font_size":9, "color":Colors.BLACK, "bold":True}
+        self.text = {"text":f"({self.rect.x}, {self.rect.y})", "font_size":11, "color":Colors.BLACK, "bold":True}
 
     def draw(self, screen: pygame.Surface) -> None:
 
