@@ -19,7 +19,6 @@ streets = []
 
 
 # BUG: Bi-directional connections are not visualized until the map is reloaded
-# TODO: Stop pickling maps. Load data and re-instantiate nodes from it instead.
 
 
 def get_screen() -> pygame.Surface:
@@ -50,10 +49,12 @@ if __name__ == '__main__':
     # Simple map of konya
     # path_to_map_file = "./assets/konya_map.p"
 
-    path_to_map_file = "default-map.p"
+    path_to_map_file = "default-map.json"
 
 
-    buildings = utils.load_map(to_filename=path_to_map_file)
+    buildings_data = utils.load_map(to_filename=path_to_map_file)
+    buildings = City.make_buildings_from_saved_file(buildings_data)
+
 
     konya = City(
         buildings=buildings,
@@ -64,7 +65,7 @@ if __name__ == '__main__':
 
     map_image = pygame.image.load(Resources.KONYA_MAP_IMAGE_PATH)
     mapmaker = MapMaker(map_image=map_image)
-    
+
     run(
 
         city=konya,

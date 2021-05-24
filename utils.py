@@ -1,6 +1,6 @@
-from typing import List, Any
+from typing import List, Any, Dict
 import traceback
-import pickle
+import json
 
 import pygame
 
@@ -32,25 +32,25 @@ def confirm_hashes_are_unique(buildings: List) -> None:
 
 
 
-def load_map(to_filename="default-map-buildings.p") -> List:
+def load_map(to_filename="default-map-buildings.json") -> Dict:
     """
     to_filename (string): name of file to load
 
-    Loads and returns map with given filename. Returns empty list if any exception occurs
+    Loads and returns map with given filename as a dict. Returns empty dict if any exception occurs
     """
 
     try:
+        with open(to_filename, 'r') as map_file:
+            return json.load(map_file)
 
-        with open(to_filename, 'rb') as map_file:
-            return pickle.load(map_file)
 
     except Exception as e:
-        print(f"WARNING! Couldn't find file ({to_filename}).")
+        print(f"\nWARNING! Couldn't find file ({to_filename}).")
         traceback.print_exc()
-        return []
+        return { "data": [] }
 
 
-def save_changes(data: Any, map_name:str="default-map-buildings.p") -> None:
+def save_changes(data: List, map_name:str="default-map-buildings.json") -> None:
     """
     data: Data to save
 
@@ -59,5 +59,11 @@ def save_changes(data: Any, map_name:str="default-map-buildings.p") -> None:
     Saves provided data into given filename
     """
 
-    with open(map_name, "wb") as save_file:
-        pickle.dump(data, save_file)
+    data_as_dict: Dict[str, List] = {
+        "data": [
+            {"x": building.x, "y": building.y, "connections": [[conn.x, conn.y] for conn in building.connections]} for building in data
+        ]
+    }
+
+    with open(map_name, "w") as save_file:
+        json.dump(data_as_dict, save_file, indent=4)

@@ -6,7 +6,7 @@ A City is a graph made of Buildings (nodes) which are connected by Streets (arcs
 
 import traceback
 
-from typing import Callable, List, Tuple, Union
+from typing import Callable, List, Tuple, Union, Dict
 
 import pygame
 
@@ -174,3 +174,25 @@ class City:
         """
         for node1, node2 in  zip(nodes[:-1], nodes[1:]):
             self.draw_street(node1, node2, Colors.YELLOW, width=3)
+
+
+    @staticmethod
+    def make_buildings_from_saved_file(building_data: Dict[str, List]) -> List[Building]:
+
+        buildings: List[Building] = []
+
+        # First, create buildings without their connections
+        for building_data in building_data["data"]:
+            buildings.append(
+                Building(**building_data)
+            )
+
+        # then connect them all
+        temp_city = City(buildings, [], None)
+
+        get_building_at_pos = lambda x, y: temp_city.get_building_at_pos((x, y))
+    
+        for i, building in enumerate(buildings):
+            building.connections = [get_building_at_pos(*conn) for conn in building.connections]
+
+        return buildings
