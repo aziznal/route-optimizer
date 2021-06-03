@@ -13,7 +13,12 @@ import numpy as np
 
 class Street(Arc):
 
-    def __init__(self, *args, show_arrows: bool = True, color: Colors, width: int) -> None:
+    def __init__(
+        self, *args,
+        show_arrows: bool = True,
+        color: Colors,
+        width: int
+    ) -> None:
         super().__init__(*args)
 
         self.color = color

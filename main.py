@@ -14,10 +14,6 @@ from City import City
 from algorithms import A_star, Dijkstra
 
 
-buildings = []
-streets = []
-
-
 # BUG: Bi-directional connections are not visualized until the map is reloaded
 
 
@@ -51,25 +47,14 @@ if __name__ == '__main__':
     buildings_data = utils.load_map(to_filename=path_to_map_file)
     buildings = City.make_buildings_from_saved_file(buildings_data)
 
-
     konya = City(
         buildings=buildings,
-        streets=streets,
         on_change=lambda: utils.save_changes(buildings, map_name=path_to_map_file)
     )
-    konya.create_streets_between_buildings()
 
     # solution = Dijkstra(konya.buildings).find_shortest_path(
-    #     source_node=konya.get_building_at_pos((369, 92)),
-    #      destination_node=konya.get_building_at_pos((373, 709)),
-    # )
-
-
-
-
-    # solution = A_star(konya.buildings).find_shortest_path(
-    #     source_node=konya.get_building_at_pos((369, 92)),
-    #     destination_node=konya.get_building_at_pos((373, 709)),
+    #     source_node=konya.get_building_at_pos((518, 45)),
+    #      destination_node=konya.get_building_at_pos((645, 772)),
     # )
 
     solution = A_star(konya.buildings).find_shortest_path(
@@ -87,7 +72,7 @@ if __name__ == '__main__':
         city=konya,
 
         draw_functions=[
-            mapmaker.draw,
+            # mapmaker.draw,
             konya.draw
         ]
 

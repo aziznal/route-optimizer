@@ -4,9 +4,8 @@ A City is a graph made of Buildings (nodes) which are connected by Streets (arcs
 
 """
 
-import traceback
-
 from typing import Callable, List, Tuple, Union, Dict
+import traceback
 
 import pygame
 
@@ -18,11 +17,19 @@ from Street import Street
 
 class City:
 
-    def __init__(self, buildings: List[Building], streets: List[Street], on_change: Callable) -> None:
+    def __init__(
+        self,
+        buildings: List[Building],
+        on_change: Callable[[], None],
+        create_streets_between_buildings: bool = True
+    ) -> None:
 
         self.buildings = buildings
-        self.streets = streets
+        self.streets: List[Street] = []
         self.on_change = on_change
+
+        if create_streets_between_buildings:
+            self.create_streets_between_buildings()
 
     def draw(self, screen: pygame.Surface) -> None:
 
@@ -108,9 +115,15 @@ class City:
 
         self.on_change()
 
-    def connect_buildings(self, pos1: Tuple[int, int], pos2: Tuple[int, int], bidirectional=False, verbose=True) -> None:
+    def connect_buildings(
+        self,
+        pos1: Tuple[int, int],
+        pos2: Tuple[int, int],
+        bidirectional=False,
+        verbose=True
+    ) -> None:
         """
-        Create a one-way or two-way connection between nodes at pos1 and pos2
+        Create a connection between nodes at pos1 and pos2
         """
         building1 = self.get_building_at_pos(pos1)
         building2 = self.get_building_at_pos(pos2)
@@ -156,12 +169,19 @@ class City:
                     )
                 )
 
-    def draw_street(self, building1: Building, building2: Building, color: Colors = Colors.BLACK, width: int = 1) -> None:
+    def draw_street(
+            self,
+            building1: Building,
+            building2: Building,
+            color: Colors = Colors.BLACK,
+            width: int = 1
+    ) -> None:
         """
         Creates an Arc between the two given buildings
         """
 
-        new_street = Street(building1, building2, show_arrows=True, color=color, width=width)
+        new_street = Street(building1, building2,
+                            show_arrows=True, color=color, width=width)
 
         self.streets.append(new_street)
 
@@ -172,12 +192,13 @@ class City:
         Colors a path starting from first node until last node in the
         given list
         """
-        for node1, node2 in  zip(nodes[:-1], nodes[1:]):
+        for node1, node2 in zip(nodes[:-1], nodes[1:]):
             self.draw_street(node1, node2, Colors.YELLOW, width=3)
 
-
     @staticmethod
-    def make_buildings_from_saved_file(building_data: Dict[str, List]) -> List[Building]:
+    def make_buildings_from_saved_file(
+        building_data: Dict[str, List]
+    ) -> List[Building]:
 
         buildings: List[Building] = []
 
@@ -188,11 +209,19 @@ class City:
             )
 
         # then connect them all
-        temp_city = City(buildings, [], None)
+        temp_city = City(
+            buildings,
+            on_change=lambda: None,
+            create_streets_between_buildings=False
+        )
 
-        get_building_at_pos = lambda x, y: temp_city.get_building_at_pos((x, y))
-    
-        for i, building in enumerate(buildings):
-            building.connections = [get_building_at_pos(*conn) for conn in building.connections]
+        def get_building_at_pos(x, y):
+            return temp_city.get_building_at_pos((x, y))
+
+        # Convert each building's connections from coordinates to Building objects
+        for building in buildings:
+            building.connections = [
+                get_building_at_pos(*coords) for coords in building.connections
+            ]
 
         return buildings

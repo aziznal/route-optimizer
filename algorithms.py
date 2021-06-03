@@ -1,24 +1,27 @@
-
-from Street import Street
-from Building import Building
 from typing import Union, List, Dict
 
-from City import City
+import numpy as np
+
 from BaseClasses.Node import Node
 from BaseClasses.Arc import Arc
 
-import numpy as np
 
 
 class Algorithm:
 
     def __init__(self, nodes: List[Node]) -> None:
         self.nodes = nodes
-
     
     def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
         raise NotImplementedError("Method has not been implemented yet.")
 
+    @staticmethod
+    def get_direct_distance_between_nodes(node1: Node, node2: Node) -> float:
+        """
+        Returns distance between given nodes as a straight line.
+        """
+
+        return Arc(node1, node2).calculate_length()
 
 
 class A_star(Algorithm):
@@ -28,29 +31,31 @@ class A_star(Algorithm):
 
     def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
 
+        print("\nApplying A* Algorithm ...\n")
+
         self.source_node = source_node
         self.destination_node = destination_node
 
-        # To help with returning the result of the algorithm (TODO: give better explanation)
+        # This dict is where the final shortest path is saved.
+        # It maps current node to the node that should preceed it in a shortest path.
         self.prev_node: Dict[Node, Node] = {}
-        
-        self.open_set: List[Node] = []
-        # self.unvisited: List[Node] = [node for node in self.nodes if node != self.source_node]
 
-        # Starting node is present in visited list from the start
+        self.open_set: List[Node] = []
+
+        # source node is present in visited list from the beginning
         self.open_set.append(self.source_node)
         self.current_node = self.source_node
 
-        # No node comes before the starting node, so set it to none
+        # No node comes before the source node
         self.prev_node[self.source_node] = None
 
-        
-        # To save distance from source node to current node:
+        # This dict saves distances from source node to current node
+        # It maps node to distance
         self.g_scores = self.get_initial_distances()
-        
+
+        # This dict stores result of objective function
         self.f_scores = self.get_initial_distances()
         self.f_scores[self.source_node] = self.h_cost(self.source_node)
-
 
         while True:
 
@@ -61,63 +66,61 @@ class A_star(Algorithm):
 
             for neighbor in self.current_node.connections:
 
-                neighbor_new_g_score = self.g_scores[self.current_node] + A_star.get_distance_between_nodes(self.current_node, neighbor)
+                neighbor_new_g_score = self.g_scores[self.current_node] + \
+                    Algorithm.get_direct_distance_between_nodes(
+                        self.current_node, neighbor)
 
                 if neighbor_new_g_score < self.g_scores[neighbor]:
 
                     self.prev_node[neighbor] = self.current_node
 
                     self.g_scores[neighbor] = neighbor_new_g_score
-                    self.f_scores[neighbor] = self.g_scores[neighbor] + self.h_cost(neighbor)
+                    self.f_scores[neighbor] = self.g_scores[neighbor] + \
+                        self.h_cost(neighbor)
 
                     if neighbor not in self.open_set:
                         self.open_set.append(neighbor)
 
             self.current_node = self.get_node_with_lowest_f_score()
 
-
         return self.construct_path()
-    
-    def f_cost(self, node):
-        pass
 
-    def g_cost(self):
-        """
-        length of path from starting node to current node
-        """
-        pass
-
-    def h_cost(self, node: Node):
+    def h_cost(self, node: Node) -> float:
         """
         length of 'direct' path from given node to destination node
         """
-        return A_star.get_distance_between_nodes(node, self.destination_node, connected=False)
-
+        return Algorithm.get_direct_distance_between_nodes(
+            node,
+            self.destination_node
+        )
 
     def get_initial_distances(self) -> Dict[Node, Union[float, int]]:
         """
         Returns a map of distances from initial node, all set to
         infinity except for the source node
         """
-        distances = { node: np.inf for node in self.nodes }
+        distances = {node: np.inf for node in self.nodes}
 
         # Source Node has distance 0 with itself
         distances[self.source_node] = 0
-        
+
         return distances
 
-
-    def get_node_with_lowest_f_score(self):
+    def get_node_with_lowest_f_score(self) -> Node:
         """
         Return the current node's neighboring node with the least f_cost
         """
 
-        open_set_f_scores = { node: self.f_scores[node] for node in self.open_set }
+        f_scores_of_nodes_in_open_setopen_set = {
+            node: self.f_scores[node] for node in self.open_set
+        }
 
-        return min(open_set_f_scores, key=open_set_f_scores.get)
+        return min(
+            f_scores_of_nodes_in_open_setopen_set,
+            key=f_scores_of_nodes_in_open_setopen_set.get
+        )
 
-
-    def check_satisfies_exit_condition(self):
+    def check_satisfies_exit_condition(self) -> bool:
 
         return any([
 
@@ -127,36 +130,24 @@ class A_star(Algorithm):
 
         ])
 
-    @staticmethod
-    def get_distance_between_nodes(node1: Node, node2: Node, connected=True) -> float:
-
-        if connected:
-            assert node2 in node1.connections
-
-        return Arc(node1, node2).calculate_length()
-
-
-    def construct_path(self):
+    def construct_path(self) -> List[Node]:
 
         shortest_path: List[Node] = []
-        u = self.destination_node
+        current_node = self.destination_node
 
-        while u is not None:
-            shortest_path.append(u)
-            u = self.prev_node[u]
+        while current_node is not None:
+            shortest_path.append(current_node)
+            current_node = self.prev_node[current_node]
 
         shortest_path.reverse()
 
         return shortest_path
-        
-
 
 
 class Dijkstra(Algorithm):
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-
 
     def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
         """
@@ -168,11 +159,14 @@ class Dijkstra(Algorithm):
 
         Algorithm was implemented from https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
         """
-        
+
+        print("\nApplying Dijkstra's Algorithm ...\n")
+
         self.source_node = source_node
         self.destination_node = destination_node
 
-        # <Node, Node> Dict that points to the node that leads to current node with the shortest path
+        # <Node, Node> Dict that points to the node that 
+        #  leads to current node with the shortest path
         self.prev_node: Dict[Node, Union[Node, None]] = {}
 
         ### Step 1
@@ -183,12 +177,12 @@ class Dijkstra(Algorithm):
         self.distances = self.get_initial_distances(source_node)
         self.current_node = source_node
 
-        # We don't care about nodes that lead back to source
+        # no node comes before source
         self.prev_node[source_node] = None
 
         # Loop from step 3 till condition is satisfied in step 5
         while 1:
-            
+
             ### Step 3
             current_node_tentative_distances = self.get_current_node_tentative_distances()
 
@@ -197,62 +191,50 @@ class Dijkstra(Algorithm):
                     self.distances[node] = distance
                     self.prev_node[node] = self.current_node
 
-
             ### Step 4
             self.unvisited_nodes.remove(self.current_node)
             self.visited_nodes.append(self.current_node)
 
-            ### Check if Step 5    
-            if self.check_exit_conditions():
+            ### if Step 5, then algorithm is done
+            if self.check_any_exit_conditions_satisfy():
                 break
-            
+
             ### Otherwise, Step 6
-            # Get node with least tentative distance and set it as current node
-            print(f"Prev. Node: {self.current_node}")
             self.current_node = self.get_unvisited_node_with_least_tentative_distance()
-            print(f"Current. Node: {self.current_node}", end="\n\n")
 
-        # [print(f"{key}: {val}") for key, val in self.distances.items()]
-
-        print("\n\nVisited Nodes:")
-        [print(node) for node in self.visited_nodes]
-        
         return self.return_shortest_path()
 
-
-    
     def get_initial_distances(self, source_node) -> Dict[Node, Union[float, int]]:
         """
         Returns a map of distances from initial node, all set to
         infinity except for the source node
         """
-        distances = { node: np.inf for node in self.nodes }
+        distances = {node: np.inf for node in self.nodes}
 
         # Source Node has distance 0 with itself
         distances[source_node] = 0
-        
+
         return distances
 
     def get_current_node_tentative_distances(self) -> Dict[Node, Union[float, int]]:
+        """
+        Tentative distance is the length of path starting at source node and ending at current node
+        """
 
         distances: Dict[Node, Union[float, int]] = {}
 
         for neighbor_node in self.current_node.connections:
-            distance_to_neighbor = self.get_distance_between_nodes(self.current_node, neighbor_node)
+            distance_to_neighbor = Algorithm.get_direct_distance_between_nodes(
+                self.current_node, neighbor_node)
 
             # Add distance from source node to current node as well. This is what makes it 'Tentative'
-            distances[neighbor_node] = distance_to_neighbor + self.distances[self.current_node]
+            distances[neighbor_node] = distance_to_neighbor + \
+                self.distances[self.current_node]
 
         return distances
 
-    def get_distance_between_nodes(self, node1: Node, node2: Node) -> float:
+    def check_any_exit_conditions_satisfy(self) -> bool:
 
-        assert node2 in node1.connections
-
-        return Arc(node1, node2).calculate_length()
-
-    def check_exit_conditions(self) -> bool:
-        
         # Either destination node has been visited
         if self.destination_node in self.visited_nodes:
             # print("Reached Destination Node")
@@ -260,8 +242,10 @@ class Dijkstra(Algorithm):
 
         # Or the smallest distance between source and any unvisited node is Infinity (i.e unreacheable)
         # NOTE: This condition's code is untested
-        unvisited_nodes_dict = { node: self.distances[node] for node in self.unvisited_nodes }
-        current_min_distance = min(unvisited_nodes_dict, key=unvisited_nodes_dict.get)
+        unvisited_nodes_dict = {
+            node: self.distances[node] for node in self.unvisited_nodes}
+        current_min_distance = min(
+            unvisited_nodes_dict, key=unvisited_nodes_dict.get)
 
         if current_min_distance == np.inf:
             print("No more nodes are reacheable")
@@ -272,44 +256,32 @@ class Dijkstra(Algorithm):
     def get_unvisited_node_with_least_tentative_distance(self) -> Node:
 
         # Subset dict of all distances for only unvisited nodes
-        unvisited_nodes_dict = { node: self.distances[node] for node in self.unvisited_nodes }
+        distances_of_unvisited_nodes = {
+            node: self.distances[node] for node in self.unvisited_nodes}
 
-        return min(unvisited_nodes_dict, key=unvisited_nodes_dict.get)
+        return min(distances_of_unvisited_nodes, key=distances_of_unvisited_nodes.get)
 
-    def return_shortest_path(self):
-        # shortest_path: List[Node] = []
+    def get_closest_connected_node(self, neighbor_node: Node) -> Node:
 
-        # if self.destination_node not in self.visited_nodes:
-        #     return []
+        distances_of_connected_nodes = {
+            node: self.distances[node] for node in neighbor_node.connections
+        }
 
-        # current_node = self.source_node
-        # shortest_path.append(current_node)
+        return min(distances_of_connected_nodes, key=distances_of_connected_nodes.get)
 
-        # next_node = None
-
-        # while next_node != self.destination_node:
-        #     next_node = self.get_closest_connected_node(current_node)
-        #     shortest_path.append(next_node)
-        #     current_node = next_node
-
-        # return shortest_path
+    def return_shortest_path(self) -> List[Node]:
 
         shortest_path: List[Node] = []
-        u = self.destination_node
+        current_node = self.destination_node
 
-        while u is not None:
-            shortest_path.append(u)
-            u = self.prev_node[u]
+        while current_node is not None:
+            shortest_path.append(current_node)
+            current_node = self.prev_node[current_node]
 
         shortest_path.reverse()
 
         return shortest_path
 
-
-
-    def get_closest_connected_node(self, neighbor_node: Node) -> Node:
-        dict_subset = { node: self.distances[node] for node in neighbor_node.connections }
-        return min( dict_subset, key=dict_subset.get )
 
 
 class Johnson(Algorithm):
