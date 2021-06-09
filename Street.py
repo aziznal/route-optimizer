@@ -15,7 +15,7 @@ class Street(Arc):
 
     def __init__(
         self, *args,
-        show_arrows: bool = False,
+        show_arrows: bool = True,
         color: Colors,
         width: int
     ) -> None:
@@ -27,6 +27,7 @@ class Street(Arc):
         self.show_arrows = show_arrows
 
         self.arrow_surface = self.create_arrow_surface()
+        self.arrow_xy = self._adjust_line_end(*self.node2.rect.center)
 
         self.start_pos, self.end_pos = self._get_line_start_and_end()
 
@@ -42,12 +43,20 @@ class Street(Arc):
         return arrow_surface
 
     def draw_arrow(self, screen: pygame.Surface) -> None:
-        screen.blit(self.arrow_surface, (self.node2.x, self.node2.y))
+
+        screen.blit(self.arrow_surface, self.arrow_xy)
 
     def _adjust_line_end(self, end_x: int, end_y: int) -> Tuple[int, int]:
 
-        dx = NODE_RADIUS * np.cos(self.angle)
-        dy = NODE_RADIUS * np.sin(self.angle)
+        d = NODE_RADIUS * 1.3
+
+        alpha = (360 - self.angle) % 90
+        beta = 90 - alpha
+        
+        print(f"alpha: {alpha}\tbeta: {beta}\n")
+
+        dx = np.sin(np.deg2rad(beta)) * d
+        dy = np.sin(np.deg2rad(alpha)) * d
 
         quadrant = self.get_quadrant_of_node2()
 
@@ -58,16 +67,16 @@ class Street(Arc):
             end_y += dy
 
         elif quadrant == 2:
-            end_x -= dx
+            end_x += dx
             end_y += dy
 
         elif quadrant == 3:
-            end_x -= dx
-            end_y += dy
+            end_x += dx
+            end_y -= dy
 
         elif quadrant == 4:
             end_x -= dx
-            end_y += dy
+            end_y -= dy
 
         return end_x, end_y
 
@@ -101,6 +110,3 @@ class Street(Arc):
                 end_pos=self.end_pos,
                 width=self.width
             )
-
-        if self.show_arrows:
-            self.draw_arrow(screen)

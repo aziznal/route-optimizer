@@ -41,6 +41,10 @@ class City:
         for building in self.buildings:
             building.draw(screen)
 
+        for street in self.streets:
+            if street.show_arrows:
+                street.draw_arrow(screen)
+
         if self.highlighted_building is not None:
             self.draw_highlight(screen)
             # Assume building is not being highlighted at next frame
