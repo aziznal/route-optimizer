@@ -49,7 +49,7 @@ class City:
         building = self.get_building_at_pos(mouse_pos)
 
         if building is not None:
-            self.highlighted_building = Building(*building.rect.topleft, connections=[])
+            self.highlighted_building = Building(*building.rect.topleft, connections=[], annotate_with_text=False)
         
         else:
             self.highlighted_building = None
@@ -70,6 +70,8 @@ class City:
             rect
         )
 
+        self.highlighted_building.draw_text(screen)
+
 
     def get_building_at_pos(self, pos: Tuple[int, int]) -> Union[Building, None]:
         """
@@ -86,9 +88,9 @@ class City:
         Creates a building at the given position
         """
 
-        new_building_pos = (pos[0] - NODE_RADIUS//2, pos[1] - NODE_RADIUS//2)
+        new_building_pos = (pos[0] + NODE_RADIUS//2, pos[1] + NODE_RADIUS//2)
 
-        new_building = Building(*new_building_pos, connections=[])
+        new_building = Building(*new_building_pos, connections=[], annotate_with_text=False)
 
         self.buildings.append(new_building)
 
@@ -237,7 +239,7 @@ class City:
         # First, create buildings without their connections
         for building_data in building_data["data"]:
             buildings.append(
-                Building(**building_data)
+                Building(**building_data, annotate_with_text=False)
             )
 
         # then connect them all
