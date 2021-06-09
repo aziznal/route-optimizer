@@ -53,14 +53,14 @@ class Street(Arc):
         alpha = (360 - self.angle) % 90
         beta = 90 - alpha
         
-        print(f"alpha: {alpha}\tbeta: {beta}\n")
+        # print(f"alpha: {alpha}\tbeta: {beta}\n")
 
         dx = np.sin(np.deg2rad(beta)) * d
         dy = np.sin(np.deg2rad(alpha)) * d
 
         quadrant = self.get_quadrant_of_node2()
 
-        print(f"angle: {self.angle}\tquadrant: {quadrant}\n\n")
+        # print(f"angle: {self.angle}\tquadrant: {quadrant}\n\n")
 
         if quadrant == 1:
             end_x -= dx
