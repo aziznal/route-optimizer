@@ -66,7 +66,7 @@ class City:
 
         pygame.draw.ellipse(
             screen,
-            Colors.GREEN,
+            Colors.LIGHT_BLUE,
             rect
         )
 

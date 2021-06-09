@@ -19,6 +19,10 @@ class Colors:
 
     BLUE = 61, 126, 255
 
+    LIGHT_BLUE = 0, 145, 255
+
+    PURPLE = 145, 71, 255
+
     YELLOW = 230, 192, 0
 
 
