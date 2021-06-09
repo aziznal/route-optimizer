@@ -26,7 +26,7 @@ class Building(Node):
         Returns text containing this building's coordinates as a pygame.Surface
         """
         return utils.create_text(
-            text=f"({self.rect.bottomright[0]}, {self.rect.bottomright[1]})",
+            text=f"({self.x}, {self.y})",
             font_size=15,
             color=Colors.BLACK,
             bold=True

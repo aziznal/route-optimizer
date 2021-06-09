@@ -43,34 +43,39 @@ class City:
 
         if self.highlighted_building is not None:
             self.draw_highlight(screen)
+            # Assume building is not being highlighted at next frame
+            self.highlighted_building.annotate_with_text = False
 
     def set_highlighted_building(self, mouse_pos: Tuple[int, int]) -> None:
         # Check if there is a building at given pos
         building = self.get_building_at_pos(mouse_pos)
 
         if building is not None:
-            self.highlighted_building = Building(*building.rect.topleft, connections=[], annotate_with_text=False)
+            # self.highlighted_building = Building(*building.rect.topleft, connections=[], annotate_with_text=False)
+            self.highlighted_building = building
+            self.highlighted_building.annotate_with_text = True
         
         else:
             self.highlighted_building = None
 
     def draw_highlight(self, screen: pygame.Surface) -> None:
         
-        rect = pygame.Rect(
-            self.highlighted_building.rect.center,
+        highlight_rect = pygame.Rect(
+            self.highlighted_building.rect.topleft,
             (
                 self.highlighted_building.rect.width * 1.1,
                 self.highlighted_building.rect.height * 1.1
             )
         )
 
+        # Center highlight on the hovered building
+        highlight_rect.centerx, highlight_rect.centery = self.highlighted_building.rect.center
+
         pygame.draw.ellipse(
             screen,
             Colors.LIGHT_BLUE,
-            rect
+            highlight_rect
         )
-
-        self.highlighted_building.draw_text(screen)
 
 
     def get_building_at_pos(self, pos: Tuple[int, int]) -> Union[Building, None]:
@@ -88,7 +93,7 @@ class City:
         Creates a building at the given position
         """
 
-        new_building_pos = (pos[0] + NODE_RADIUS//2, pos[1] + NODE_RADIUS//2)
+        new_building_pos = (pos[0] - NODE_RADIUS//4, pos[1] - NODE_RADIUS//4)
 
         new_building = Building(*new_building_pos, connections=[], annotate_with_text=False)
 
