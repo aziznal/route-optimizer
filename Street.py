@@ -15,7 +15,7 @@ class Street(Arc):
 
     def __init__(
         self, *args,
-        show_arrows: bool = True,
+        show_arrows: bool = False,
         color: Colors,
         width: int
     ) -> None:
@@ -73,8 +73,11 @@ class Street(Arc):
 
     def _get_line_start_and_end(self) -> Tuple[Tuple[int, int], Tuple[int, int]]:
 
-        start_x, start_y = self.node1.x + NODE_RADIUS//2, self.node1.y + NODE_RADIUS//2
-        end_x, end_y = self.node2.x + NODE_RADIUS//2, self.node2.y + NODE_RADIUS//2
+        # start_x, start_y = self.node1.x + NODE_RADIUS//2, self.node1.y + NODE_RADIUS//2
+        # end_x, end_y = self.node2.x + NODE_RADIUS//2, self.node2.y + NODE_RADIUS//2
+
+        start_x, start_y = self.node1.x, self.node1.y
+        end_x, end_y = self.node2.x, self.node2.y
 
         # Move end x and end y back along the line to place the arrows better
         # end_x, end_y = self._adjust_line_end(end_x, end_y)

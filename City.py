@@ -28,6 +28,8 @@ class City:
         self.streets: List[Street] = []
         self.on_change = on_change
 
+        self.highlighted_building = None
+
         if create_streets_between_buildings:
             self.create_streets_between_buildings()
 
@@ -38,6 +40,36 @@ class City:
 
         for street in self.streets:
             street.draw(screen)
+
+        if self.highlighted_building is not None:
+            self.draw_highlight(screen)
+
+    def set_highlighted_building(self, mouse_pos: Tuple[int, int]) -> None:
+        # Check if there is a building at given pos
+        building = self.get_building_at_pos(mouse_pos)
+
+        if building is not None:
+            self.highlighted_building = Building(*building.rect.topleft, connections=[])
+        
+        else:
+            self.highlighted_building = None
+
+    def draw_highlight(self, screen: pygame.Surface) -> None:
+        
+        rect = pygame.Rect(
+            self.highlighted_building.rect.center,
+            (
+                self.highlighted_building.rect.width * 1.1,
+                self.highlighted_building.rect.height * 1.1
+            )
+        )
+
+        pygame.draw.ellipse(
+            screen,
+            Colors.GREEN,
+            rect
+        )
+
 
     def get_building_at_pos(self, pos: Tuple[int, int]) -> Union[Building, None]:
         """
@@ -165,7 +197,7 @@ class City:
 
                 self.streets.append(
                     Street(
-                        building, connected_building, show_arrows=True, color=Colors.BLACK, width=1
+                        building, connected_building, show_arrows=False, color=Colors.BLACK, width=1
                     )
                 )
 
@@ -181,7 +213,7 @@ class City:
         """
 
         new_street = Street(building1, building2,
-                            show_arrows=True, color=color, width=width)
+                            show_arrows=False, color=color, width=width)
 
         self.streets.append(new_street)
 

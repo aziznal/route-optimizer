@@ -13,6 +13,10 @@ class Building(Node):
         super().__init__(*args, **kwargs)
 
         self.rect = pygame.Rect(self.x, self.y, NODE_RADIUS, NODE_RADIUS)
+
+        self.rect.centerx = self.x
+        self.rect.centery = self.y
+
         self.coordinates_text = self.get_coordinates_as_text()
 
     def get_coordinates_as_text(self) -> pygame.Surface:

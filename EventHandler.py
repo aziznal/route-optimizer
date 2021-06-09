@@ -26,6 +26,9 @@ def _handle_mouse_events(events: List[pygame.event.Event], city: City) -> None:
 
     current_mouse_pos = pygame.mouse.get_pos()
 
+    # Pass mousepos to highlight hovered building
+    city.set_highlighted_building(current_mouse_pos)
+
     for event in events:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
