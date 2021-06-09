@@ -197,6 +197,7 @@ class City:
         """
 
         # BUG: Bi-directional connections aren't being drawn until the map is reloaded
+        # NOTE: above bug is because bi-connections aren't being setup properly in this method
 
         for building in self.buildings:
 
@@ -204,7 +205,7 @@ class City:
 
                 self.streets.append(
                     Street(
-                        building, connected_building, show_arrows=False, color=Colors.BLACK, width=1
+                        building, connected_building, color=Colors.BLACK, width=1
                     )
                 )
 
@@ -219,12 +220,10 @@ class City:
         Creates an Arc between the two given buildings
         """
 
-        new_street = Street(building1, building2,
-                            show_arrows=False, color=color, width=width)
+        new_street = Street(building1, building2, color=color, width=width)
 
         self.streets.append(new_street)
 
-        self.on_change()
 
     def color_paths(self, nodes: List[Building]) -> None:
         """
