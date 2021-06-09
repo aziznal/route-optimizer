@@ -35,11 +35,11 @@ class City:
 
     def draw(self, screen: pygame.Surface) -> None:
 
-        for building in self.buildings:
-            building.draw(screen)
-
         for street in self.streets:
             street.draw(screen)
+
+        for building in self.buildings:
+            building.draw(screen)
 
         if self.highlighted_building is not None:
             self.draw_highlight(screen)
