@@ -1,4 +1,3 @@
-
 from typing import Tuple
 
 from BaseClasses.Arc import Arc
@@ -12,12 +11,8 @@ import numpy as np
 
 
 class Street(Arc):
-
     def __init__(
-        self, *args,
-        show_arrows: bool = True,
-        color: Colors,
-        width: int
+        self, *args, show_arrows: bool = True, color: Colors, width: int
     ) -> None:
         super().__init__(*args)
 
@@ -52,7 +47,7 @@ class Street(Arc):
 
         alpha = (360 - self.angle) % 90
         beta = 90 - alpha
-        
+
         # print(f"alpha: {alpha}\tbeta: {beta}\n")
 
         dx = np.sin(np.deg2rad(beta)) * d
@@ -97,10 +92,7 @@ class Street(Arc):
 
         if self.width == 1:
             pygame.draw.aaline(
-                screen,
-                self.color,
-                start_pos=self.start_pos,
-                end_pos=self.end_pos
+                screen, self.color, start_pos=self.start_pos, end_pos=self.end_pos
             )
         else:
             pygame.draw.line(
@@ -108,5 +100,5 @@ class Street(Arc):
                 self.color,
                 start_pos=self.start_pos,
                 end_pos=self.end_pos,
-                width=self.width
+                width=self.width,
             )

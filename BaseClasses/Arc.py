@@ -1,18 +1,13 @@
 """
-
 An Arc is a *directional* connection between two Nodes
-
 """
 
 import numpy as np
-
-from typing import Literal, Union
-
+from typing import Literal
 from .Node import Node
 
 class Arc:
     def __init__(self, node1: Node, node2: Node) -> None:
-
         self.node1, self.node2 = node1, node2
 
         self.slope = self.calculate_slope()
@@ -27,11 +22,11 @@ class Arc:
         Returns length of Arc connecting the two nodes
         """
 
-        length_squared = (
-            (self.node1.x - self.node2.x)**2 + (self.node1.y - self.node2.y)**2
-        )
+        length_squared = (self.node1.x - self.node2.x) ** 2 + (
+            self.node1.y - self.node2.y
+        ) ** 2
 
-        return length_squared ** 0.5
+        return length_squared**0.5
 
     def calculate_slope(self) -> float:
         """
@@ -61,7 +56,6 @@ class Arc:
 
         # Left
         if x2 < x1:
-
             # Top
             if y2 < y1:
                 return 2
@@ -72,7 +66,6 @@ class Arc:
 
         # Right or center
         else:
-
             # Top
             if y2 < y1:
                 return 1
@@ -86,13 +79,13 @@ class Arc:
         quadrant = self.get_quadrant_of_node2()
 
         if quadrant == 2:
-            angle_in_radians += 2 * np.pi/2
+            angle_in_radians += 2 * np.pi / 2
 
         elif quadrant == 3:
-            angle_in_radians = -angle_in_radians + 3 * np.pi/2
+            angle_in_radians = -angle_in_radians + 3 * np.pi / 2
 
         elif quadrant == 4:
-            angle_in_radians += 4 * np.pi/2
+            angle_in_radians += 4 * np.pi / 2
 
         return angle_in_radians
 
@@ -110,10 +103,8 @@ class Arc:
         angle_in_radians = self._adjust_angle_for_quadrant(angle_in_radians)
 
         if in_radians:
-
             return angle_in_radians
 
         else:
-
             angle_in_degrees = angle_in_radians * 180 / np.pi
             return angle_in_degrees

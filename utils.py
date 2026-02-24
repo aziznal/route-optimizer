@@ -1,12 +1,10 @@
 from typing import List, Any, Dict
 import traceback
 import json
-
 import pygame
 
 pygame.init()
 pygame.font.init()
-
 
 
 def create_text(text, font_size, color, bold=False) -> pygame.Surface:
@@ -19,17 +17,15 @@ def create_text(text, font_size, color, bold=False) -> pygame.Surface:
     return font_obj.render(text, True, color)
 
 
-
 def confirm_hashes_are_unique(buildings: List) -> None:
     """
     Raises KeyError if any two objects in given list have identical hashes
     """
 
-    hashes = [ hash(building) for building in buildings ]
+    hashes = [hash(building) for building in buildings]
 
     if len(set(hashes)) != len(hashes):
         raise KeyError("Found two matching hashes!")
-
 
 
 def load_map(to_filename="default-map-buildings.json") -> Dict:
@@ -40,17 +36,16 @@ def load_map(to_filename="default-map-buildings.json") -> Dict:
     """
 
     try:
-        with open(to_filename, 'r') as map_file:
+        with open(to_filename, "r") as map_file:
             return json.load(map_file)
-
 
     except Exception as e:
         print(f"\nWARNING! Couldn't find file ({to_filename}).")
         traceback.print_exc()
-        return { "data": [] }
+        return {"data": []}
 
 
-def save_changes(data: List, map_name:str="default-map-buildings.json") -> None:
+def save_changes(data: list, map_name: str = "default-map-buildings.json") -> None:
     """
     data: Data to save
 
@@ -59,9 +54,14 @@ def save_changes(data: List, map_name:str="default-map-buildings.json") -> None:
     Saves provided data into given filename
     """
 
-    data_as_dict: Dict[str, List] = {
+    data_as_dict: Dict[str, list] = {
         "data": [
-            {"x": building.x, "y": building.y, "connections": [[conn.x, conn.y] for conn in building.connections]} for building in data
+            {
+                "x": building.x,
+                "y": building.y,
+                "connections": [[conn.x, conn.y] for conn in building.connections],
+            }
+            for building in data
         ]
     }
 

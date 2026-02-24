@@ -16,12 +16,11 @@ from Street import Street
 
 
 class City:
-
     def __init__(
         self,
         buildings: List[Building],
         on_change: Callable[[], None],
-        create_streets_between_buildings: bool = True
+        create_streets_between_buildings: bool = True,
     ) -> None:
 
         self.buildings = buildings
@@ -58,36 +57,32 @@ class City:
             # self.highlighted_building = Building(*building.rect.topleft, connections=[], annotate_with_text=False)
             self.highlighted_building = building
             self.highlighted_building.annotate_with_text = True
-        
+
         else:
             self.highlighted_building = None
 
     def draw_highlight(self, screen: pygame.Surface) -> None:
-        
+
         highlight_rect = pygame.Rect(
             self.highlighted_building.rect.topleft,
             (
                 self.highlighted_building.rect.width * 1.1,
-                self.highlighted_building.rect.height * 1.1
-            )
+                self.highlighted_building.rect.height * 1.1,
+            ),
         )
 
         # Center highlight on the hovered building
-        highlight_rect.centerx, highlight_rect.centery = self.highlighted_building.rect.center
-
-        pygame.draw.ellipse(
-            screen,
-            Colors.LIGHT_BLUE,
-            highlight_rect
+        highlight_rect.centerx, highlight_rect.centery = (
+            self.highlighted_building.rect.center
         )
 
+        pygame.draw.ellipse(screen, Colors.LIGHT_BLUE, highlight_rect)
 
     def get_building_at_pos(self, pos: Tuple[int, int]) -> Union[Building, None]:
         """
         Returns building at given position, if any exists. Otherwise returns None
         """
         for building in self.buildings:
-
             if pos[0] - NODE_RADIUS < building.x < pos[0] + NODE_RADIUS:
                 if pos[1] - NODE_RADIUS < building.y < pos[1] + NODE_RADIUS:
                     return building
@@ -97,9 +92,11 @@ class City:
         Creates a building at the given position
         """
 
-        new_building_pos = (pos[0] - NODE_RADIUS//4, pos[1] - NODE_RADIUS//4)
+        new_building_pos = (pos[0] - NODE_RADIUS // 4, pos[1] - NODE_RADIUS // 4)
 
-        new_building = Building(*new_building_pos, connections=[], annotate_with_text=False)
+        new_building = Building(
+            *new_building_pos, connections=[], annotate_with_text=False
+        )
 
         self.buildings.append(new_building)
 
@@ -124,7 +121,8 @@ class City:
             try:
                 if building_to_remove in potentailly_connected_building.connections:
                     potentailly_connected_building.connections.remove(
-                        building_to_remove)
+                        building_to_remove
+                    )
 
             except ValueError:
                 traceback.print_exc()
@@ -163,7 +161,7 @@ class City:
         pos1: Tuple[int, int],
         pos2: Tuple[int, int],
         bidirectional=False,
-        verbose=True
+        verbose=True,
     ) -> None:
         """
         Create a connection between nodes at pos1 and pos2
@@ -172,8 +170,7 @@ class City:
         building2 = self.get_building_at_pos(pos2)
 
         if building1 is None or building2 is None:
-            print(
-                f"Couldn't find one of the buildings: {building1}, {building2}")
+            print(f"Couldn't find one of the buildings: {building1}, {building2}")
             return
 
         # TODO: check whether building are already connected before doing this step
@@ -204,21 +201,17 @@ class City:
         # NOTE: above bug is because bi-connections aren't being setup properly in this method
 
         for building in self.buildings:
-
             for connected_building in building.connections:
-
                 self.streets.append(
-                    Street(
-                        building, connected_building, color=Colors.BLACK, width=1
-                    )
+                    Street(building, connected_building, color=Colors.BLACK, width=1)
                 )
 
     def draw_street(
-            self,
-            building1: Building,
-            building2: Building,
-            color: Colors = Colors.BLACK,
-            width: int = 1
+        self,
+        building1: Building,
+        building2: Building,
+        color: Colors = Colors.BLACK,
+        width: int = 1,
     ) -> None:
         """
         Creates an Arc between the two given buildings
@@ -227,7 +220,6 @@ class City:
         new_street = Street(building1, building2, color=color, width=width)
 
         self.streets.append(new_street)
-
 
     def color_paths(self, nodes: List[Building]) -> None:
         """
@@ -239,22 +231,18 @@ class City:
 
     @staticmethod
     def make_buildings_from_saved_file(
-        building_data: Dict[str, List]
+        building_data: Dict[str, List],
     ) -> List[Building]:
 
         buildings: List[Building] = []
 
         # First, create buildings without their connections
         for building_data in building_data["data"]:
-            buildings.append(
-                Building(**building_data, annotate_with_text=False)
-            )
+            buildings.append(Building(**building_data, annotate_with_text=False))
 
         # then connect them all
         temp_city = City(
-            buildings,
-            on_change=lambda: None,
-            create_streets_between_buildings=False
+            buildings, on_change=lambda: None, create_streets_between_buildings=False
         )
 
         def get_building_at_pos(x, y):

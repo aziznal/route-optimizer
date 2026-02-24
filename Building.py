@@ -8,7 +8,6 @@ from BaseClasses.Node import Node
 
 
 class Building(Node):
-
     def __init__(self, *args, annotate_with_text=False, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
@@ -26,16 +25,11 @@ class Building(Node):
         Returns text containing this building's coordinates as a pygame.Surface
         """
         return utils.create_text(
-            text=f"({self.x}, {self.y})",
-            font_size=15,
-            color=Colors.BLACK,
-            bold=True
+            text=f"({self.x}, {self.y})", font_size=15, color=Colors.BLACK, bold=True
         )
 
     def draw(self, screen: pygame.Surface) -> None:
-        pygame.draw.ellipse(
-            screen, Colors.RED, self.rect
-        )
+        pygame.draw.ellipse(screen, Colors.RED, self.rect)
 
         if self.annotate_with_text:
             self.draw_text(screen)
@@ -43,5 +37,5 @@ class Building(Node):
     def draw_text(self, screen: pygame.Surface):
         screen.blit(
             self.coordinates_text,
-            (self.rect.centerx - 20, self.rect.centery - NODE_RADIUS*2)
+            (self.rect.centerx - 20, self.rect.centery - NODE_RADIUS * 2),
         )

@@ -1,4 +1,3 @@
-
 SCREEN_WIDTH, SCREEN_HEIGHT = 750, 850
 
 # node radius in pixels
@@ -7,8 +6,8 @@ NODE_RADIUS = 10
 
 # Some Color Definition
 
-class Colors:
 
+class Colors:
     BLACK = 0, 0, 0
 
     WHITE = 255, 255, 255
@@ -27,7 +26,6 @@ class Colors:
 
 
 class MouseInputType:
-
     LEFT_CLICK = 1
 
     MIDDLE_CLICK = 2
@@ -40,8 +38,6 @@ class MouseInputType:
 
 
 class Resources:
-
     ARROW_IMAGE_PATH = "./assets/arrow.png"
 
     KONYA_MAP_IMAGE_PATH = "./assets/konya_map.png"
-

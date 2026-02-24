@@ -6,13 +6,13 @@ from BaseClasses.Node import Node
 from BaseClasses.Arc import Arc
 
 
-
 class Algorithm:
-
     def __init__(self, nodes: List[Node]) -> None:
         self.nodes = nodes
-    
-    def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
+
+    def find_shortest_path(
+        self, source_node: Node, destination_node: Node
+    ) -> List[Node]:
         raise NotImplementedError("Method has not been implemented yet.")
 
     @staticmethod
@@ -25,11 +25,12 @@ class Algorithm:
 
 
 class A_star(Algorithm):
-
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-    def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
+    def find_shortest_path(
+        self, source_node: Node, destination_node: Node
+    ) -> List[Node]:
 
         print("\nApplying A* Algorithm ...\n")
 
@@ -58,25 +59,25 @@ class A_star(Algorithm):
         self.f_scores[self.source_node] = self.h_cost(self.source_node)
 
         while True:
-
             if self.check_satisfies_exit_condition():
                 break
 
             self.open_set.remove(self.current_node)
 
             for neighbor in self.current_node.connections:
-
-                neighbor_new_g_score = self.g_scores[self.current_node] + \
-                    Algorithm.get_direct_distance_between_nodes(
-                        self.current_node, neighbor)
+                neighbor_new_g_score = self.g_scores[
+                    self.current_node
+                ] + Algorithm.get_direct_distance_between_nodes(
+                    self.current_node, neighbor
+                )
 
                 if neighbor_new_g_score < self.g_scores[neighbor]:
-
                     self.prev_node[neighbor] = self.current_node
 
                     self.g_scores[neighbor] = neighbor_new_g_score
-                    self.f_scores[neighbor] = self.g_scores[neighbor] + \
-                        self.h_cost(neighbor)
+                    self.f_scores[neighbor] = self.g_scores[neighbor] + self.h_cost(
+                        neighbor
+                    )
 
                     if neighbor not in self.open_set:
                         self.open_set.append(neighbor)
@@ -89,10 +90,7 @@ class A_star(Algorithm):
         """
         length of 'direct' path from given node to destination node
         """
-        return Algorithm.get_direct_distance_between_nodes(
-            node,
-            self.destination_node
-        )
+        return Algorithm.get_direct_distance_between_nodes(node, self.destination_node)
 
     def get_initial_distances(self) -> Dict[Node, Union[float, int]]:
         """
@@ -117,18 +115,14 @@ class A_star(Algorithm):
 
         return min(
             f_scores_of_nodes_in_open_setopen_set,
-            key=f_scores_of_nodes_in_open_setopen_set.get
+            key=f_scores_of_nodes_in_open_setopen_set.get,
         )
 
     def check_satisfies_exit_condition(self) -> bool:
 
-        return any([
-
-            self.current_node == self.destination_node,
-
-            len(self.open_set) == 0
-
-        ])
+        return any(
+            [self.current_node == self.destination_node, len(self.open_set) == 0]
+        )
 
     def construct_path(self) -> List[Node]:
 
@@ -145,11 +139,12 @@ class A_star(Algorithm):
 
 
 class Dijkstra(Algorithm):
-
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-    def find_shortest_path(self, source_node: Node, destination_node: Node) -> List[Node]:
+    def find_shortest_path(
+        self, source_node: Node, destination_node: Node
+    ) -> List[Node]:
         """
         Applies Dijkstra's shortest path algorithm and tries to find
         a path between source and destination, if any exists.
@@ -165,7 +160,7 @@ class Dijkstra(Algorithm):
         self.source_node = source_node
         self.destination_node = destination_node
 
-        # <Node, Node> Dict that points to the node that 
+        # <Node, Node> Dict that points to the node that
         #  leads to current node with the shortest path
         self.prev_node: Dict[Node, Union[Node, None]] = {}
 
@@ -182,9 +177,10 @@ class Dijkstra(Algorithm):
 
         # Loop from step 3 till condition is satisfied in step 5
         while 1:
-
             ### Step 3
-            current_node_tentative_distances = self.get_current_node_tentative_distances()
+            current_node_tentative_distances = (
+                self.get_current_node_tentative_distances()
+            )
 
             for node, distance in current_node_tentative_distances.items():
                 if distance < self.distances[node]:
@@ -225,11 +221,13 @@ class Dijkstra(Algorithm):
 
         for neighbor_node in self.current_node.connections:
             distance_to_neighbor = Algorithm.get_direct_distance_between_nodes(
-                self.current_node, neighbor_node)
+                self.current_node, neighbor_node
+            )
 
             # Add distance from source node to current node as well. This is what makes it 'Tentative'
-            distances[neighbor_node] = distance_to_neighbor + \
-                self.distances[self.current_node]
+            distances[neighbor_node] = (
+                distance_to_neighbor + self.distances[self.current_node]
+            )
 
         return distances
 
@@ -243,9 +241,9 @@ class Dijkstra(Algorithm):
         # Or the smallest distance between source and any unvisited node is Infinity (i.e unreacheable)
         # NOTE: This condition's code is untested
         unvisited_nodes_dict = {
-            node: self.distances[node] for node in self.unvisited_nodes}
-        current_min_distance = min(
-            unvisited_nodes_dict, key=unvisited_nodes_dict.get)
+            node: self.distances[node] for node in self.unvisited_nodes
+        }
+        current_min_distance = min(unvisited_nodes_dict, key=unvisited_nodes_dict.get)
 
         if current_min_distance == np.inf:
             print("No more nodes are reacheable")
@@ -257,7 +255,8 @@ class Dijkstra(Algorithm):
 
         # Subset dict of all distances for only unvisited nodes
         distances_of_unvisited_nodes = {
-            node: self.distances[node] for node in self.unvisited_nodes}
+            node: self.distances[node] for node in self.unvisited_nodes
+        }
 
         return min(distances_of_unvisited_nodes, key=distances_of_unvisited_nodes.get)
 
@@ -283,19 +282,14 @@ class Dijkstra(Algorithm):
         return shortest_path
 
 
-
 class Johnson(Algorithm):
-
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
 
 class TravelingSalesman(Algorithm):
-
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-
     def find_shortest_path(self, starting_node: Node, nodes: List[Node]) -> List[Node]:
         pass
-
