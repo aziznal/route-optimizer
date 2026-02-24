@@ -2,6 +2,8 @@
 
 A simple program with a pygame-based GUI that allows the user to pick points on a map that they choose, and connect those points to create paths between them.
 
+<img width="300" alt="CopyQ QdZIoE" src="https://github.com/user-attachments/assets/727e3232-e35e-4d31-8865-aadb7e781f58" />
+
 ---
 
 # Why is this?
