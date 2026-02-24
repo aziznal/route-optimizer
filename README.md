@@ -27,3 +27,13 @@ I didn't think of any other libraries at the time, and I really just wanted to g
 # What algorithms did I use? What problems does this solve?
 
 The main issue that this program aims to solve is the infamous ***Traveling Salesman Problem***. I have not decided on any algorithms / heuristics yet.
+
+---
+
+## How to run
+
+```
+uv sync
+
+uv run main.py
+```
