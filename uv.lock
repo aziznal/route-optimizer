@@ -1,0 +1,158 @@
+version = 1
+revision = 3
+requires-python = ">=3.9"
+
+[[package]]
+name = "astroid"
+version = "2.5.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "lazy-object-proxy" },
+    { name = "wrapt" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/bc/72/51d6389690b30adf1ad69993923f81b71b2110b16e02fd0afd378e30c43c/astroid-2.5.6.tar.gz", hash = "sha256:8a398dfce302c13f14bab13e2b14fe385d32b73f4e4853b9bdfb64598baa1975", size = 181541, upload-time = "2021-04-25T09:43:46.47Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f8/82/a61df6c2d68f3ae3ad1afa0d2e5ba5cfb7386eb80cffb453def7c5757271/astroid-2.5.6-py3-none-any.whl", hash = "sha256:4db03ab5fc3340cf619dbc25e42c2cc3755154ce6009469766d7143d1fc2ee4e", size = 219310, upload-time = "2021-04-25T09:43:42.177Z" },
+]
+
+[[package]]
+name = "autopep8"
+version = "1.5.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pycodestyle" },
+    { name = "toml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/77/63/e88f70a614c21c617df0ee3c4752fe7fb66653cba851301d3bcaee4b00ea/autopep8-1.5.7.tar.gz", hash = "sha256:276ced7e9e3cb22e5d7c14748384a5cf5d9002257c0ed50c0e075b68011bb6d0", size = 121537, upload-time = "2021-04-30T06:04:44.834Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a7/f6/84070ab117e6b080a87aac0ac9e4d269a66c6f6076ad81509bd0aac828d8/autopep8-1.5.7-py2.py3-none-any.whl", hash = "sha256:aa213493c30dcdac99537249ee65b24af0b2c29f2e83cd8b3f68760441ed0db9", size = 45046, upload-time = "2021-04-30T06:04:42.998Z" },
+]
+
+[[package]]
+name = "isort"
+version = "5.8.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/31/8a/6f5449a7be67e4655069490f05fa3e190f5f5864e6ddee140f60fe5526dd/isort-5.8.0.tar.gz", hash = "sha256:0a943902919f65c5684ac4e0154b1ad4fac6dcaa5d9f3426b732f1c8b5419be6", size = 167927, upload-time = "2021-03-21T06:04:11.782Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d9/47/0ec3ec948b7b3a0ba44e62adede4dca8b5985ba6aaee59998bed0916bd17/isort-5.8.0-py3-none-any.whl", hash = "sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d", size = 103227, upload-time = "2021-03-21T06:04:09.685Z" },
+]
+
+[[package]]
+name = "lazy-object-proxy"
+version = "1.6.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/bb/f5/646893a04dcf10d4acddb61c632fd53abb3e942e791317dcdd57f5800108/lazy-object-proxy-1.6.0.tar.gz", hash = "sha256:489000d368377571c6f982fba6497f2aa13c6d1facc40660963da62f5c379726", size = 44494, upload-time = "2021-03-22T20:53:40.171Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/31/f4/19e265c3ded483829cf5310748a5724db94d20946ae197a5c1819d061f46/lazy_object_proxy-1.6.0-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:b865b01a2e7f96db0c5d12cfea590f98d8c5ba64ad222300d93ce6ff9138bcad", size = 21639, upload-time = "2021-03-22T20:53:25.496Z" },
+    { url = "https://files.pythonhosted.org/packages/b6/6d/ca30420d414e6203117b2968fa6f8e883aac0d582bf378658753ce71c98b/lazy_object_proxy-1.6.0-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:4732c765372bd78a2d6b2150a6e99d00a78ec963375f236979c0626b97ed8e43", size = 57411, upload-time = "2021-03-22T20:53:26.602Z" },
+    { url = "https://files.pythonhosted.org/packages/5e/0e/998f4ba8c182a7d916cb23bed65554cd32efda13de433c73ed504d8272ec/lazy_object_proxy-1.6.0-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:9698110e36e2df951c7c36b6729e96429c9c32b3331989ef19976592c5f3c77a", size = 63183, upload-time = "2021-03-22T20:53:27.602Z" },
+    { url = "https://files.pythonhosted.org/packages/f0/b9/45a041d3bc406528bf0bcb0b8025e712b812bbcf2dde0c111757feee140d/lazy_object_proxy-1.6.0-cp39-cp39-win32.whl", hash = "sha256:1fee665d2638491f4d6e55bd483e15ef21f6c8c2095f235fef72601021e64f61", size = 20508, upload-time = "2021-03-22T20:53:28.633Z" },
+    { url = "https://files.pythonhosted.org/packages/9b/ac/afd3b1efaf5e6c22383d067260eea0c958591b21d8bb372b4eae543694eb/lazy_object_proxy-1.6.0-cp39-cp39-win_amd64.whl", hash = "sha256:f5144c75445ae3ca2057faac03fda5a902eff196702b0a24daf1d6ce0650514b", size = 22473, upload-time = "2021-03-22T20:53:29.817Z" },
+]
+
+[[package]]
+name = "mccabe"
+version = "0.6.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/06/18/fa675aa501e11d6d6ca0ae73a101b2f3571a565e0f7d38e062eec18a91ee/mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f", size = 8612, upload-time = "2017-01-26T22:13:15.699Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/89/479dc97e18549e21354893e4ee4ef36db1d237534982482c3681ee6e7b57/mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42", size = 8556, upload-time = "2017-01-26T22:13:14.36Z" },
+]
+
+[[package]]
+name = "numpy"
+version = "1.20.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f3/1f/fe9459e39335e7d0e372b5e5dcd60f4381d3d1b42f0b9c8222102ff29ded/numpy-1.20.3.zip", hash = "sha256:e55185e51b18d788e49fe8305fd73ef4470596b33fc2c1ceb304566b99c71a69", size = 7761912, upload-time = "2021-05-10T15:32:57.006Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f3/b7/918baf7c42621e479921f8bc6b274157f295edce79d467e5fdb8f53d1d5a/numpy-1.20.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:830b044f4e64a76ba71448fce6e604c0fc47a0e54d8f6467be23749ac2cbd2fb", size = 16079985, upload-time = "2021-05-10T15:26:53.224Z" },
+    { url = "https://files.pythonhosted.org/packages/ce/37/403bddc60f0d9bbfdd437c816c32f65abd044660dc34b8b8f365b4a52298/numpy-1.20.3-cp39-cp39-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:55b745fca0a5ab738647d0e4db099bd0a23279c32b31a783ad2ccea729e632df", size = 13316029, upload-time = "2021-05-10T15:28:13.782Z" },
+    { url = "https://files.pythonhosted.org/packages/cc/7f/0d414a6826b626c6fea98d98336e1f62cf9dd387c776da8dc83ce2a082b6/numpy-1.20.3-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:5d050e1e4bc9ddb8656d7b4f414557720ddcca23a5b88dd7cff65e847864c400", size = 15358906, upload-time = "2021-05-10T15:28:50.632Z" },
+    { url = "https://files.pythonhosted.org/packages/39/39/eddd9945f336041bb6e21c6aa867101a51ef6b285401fa67aa4e4d87dcdc/numpy-1.20.3-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a9c65473ebc342715cb2d7926ff1e202c26376c0dcaaee85a1fd4b8d8c1d3b2f", size = 12676013, upload-time = "2021-05-10T15:29:21.166Z" },
+    { url = "https://files.pythonhosted.org/packages/c5/90/d0159d9aed98fa9ac2536de354d7d3b0f0e80d57d606ee294efa70f1e015/numpy-1.20.3-cp39-cp39-win32.whl", hash = "sha256:16f221035e8bd19b9dc9a57159e38d2dd060b48e93e1d843c49cb370b0f415fd", size = 11364404, upload-time = "2021-05-10T15:29:48.934Z" },
+    { url = "https://files.pythonhosted.org/packages/9a/13/68830a20f816c62c6123dc2b11d8f39df6be33e01fc974b8694ece7ceb04/numpy-1.20.3-cp39-cp39-win_amd64.whl", hash = "sha256:6690080810f77485667bfbff4f69d717c3be25e5b11bb2073e76bb3f578d99b4", size = 13662737, upload-time = "2021-05-10T15:30:21.746Z" },
+]
+
+[[package]]
+name = "pycodestyle"
+version = "2.7.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/02/b3/c832123f2699892c715fcdfebb1a8fdeffa11bb7b2350e46ecdd76b45a20/pycodestyle-2.7.0.tar.gz", hash = "sha256:c389c1d06bf7904078ca03399a4816f974a1d590090fecea0c63ec26ebaf1cef", size = 103640, upload-time = "2021-03-14T18:44:04.177Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/cc/227251b1471f129bc35e966bb0fceb005969023926d744139642d847b7ae/pycodestyle-2.7.0-py2.py3-none-any.whl", hash = "sha256:514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068", size = 41725, upload-time = "2021-03-14T18:44:02.097Z" },
+]
+
+[[package]]
+name = "pygame"
+version = "2.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/c7/b8/06e02c7cca7aec915839927a9aa19f749ac17a3d2bb2610b945d2de0aa96/pygame-2.0.1.tar.gz", hash = "sha256:8b1e7b63f47aafcdd8849933b206778747ef1802bd3d526aca45ed77141e4001", size = 5536907, upload-time = "2020-12-24T13:47:26.753Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/12/89/6ae0aaceab0fd4ef0f8799295df02df78fba465216634cac446cac20cdeb/pygame-2.0.1-cp39-cp39-macosx_10_9_intel.whl", hash = "sha256:ed80b40da839d60f4c03915bb3638e3c96ea8c30e689d0cc309b7597d82cc217", size = 6931818, upload-time = "2020-12-24T13:32:15.03Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/b0/04ad7333fc130d00ee927d33ea306533368e67f70e76d5669687f53d1905/pygame-2.0.1-cp39-cp39-manylinux1_i686.whl", hash = "sha256:fd6acd09d2a0fd3f616b18f977f399ed3dd95e2d6754f115837f026d19d62e10", size = 11021442, upload-time = "2020-12-24T13:23:36.766Z" },
+    { url = "https://files.pythonhosted.org/packages/5e/77/de70cf51dc3426354a9a96ac01375af957053bfda7a9eef565bb4639872e/pygame-2.0.1-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:d8059084ce54b2c3d7b2c8bacd5f6490db849b2d2d6e7368c160b08504c87e73", size = 11763467, upload-time = "2020-12-24T13:23:38.885Z" },
+    { url = "https://files.pythonhosted.org/packages/a8/73/4ea6093f47b3190de5f0ed2e96756a5eaff511004eea08e5c4539ae21d86/pygame-2.0.1-cp39-cp39-win32.whl", hash = "sha256:107d5f82f471baee4b9522a691cb320dd52dbf329ed7a0e9ab25f75cd3caf890", size = 4848359, upload-time = "2020-12-24T13:05:11.482Z" },
+    { url = "https://files.pythonhosted.org/packages/b5/08/2359a882a9f6bcbedd4ba778960127cd7e412a2ef341ffc981ad805c5329/pygame-2.0.1-cp39-cp39-win_amd64.whl", hash = "sha256:07ed57062be4bb9741f57dab1751d95574c091c9958ed7e39cdb246d50903283", size = 5177664, upload-time = "2020-12-24T13:14:02.559Z" },
+]
+
+[[package]]
+name = "rope"
+version = "0.19.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/49/b9/f53c6d375a79ce12e0dd710b832a1e7660ab24d37d922f1963253449ee5a/rope-0.19.0.tar.gz", hash = "sha256:64e6d747532e1f5c8009ec5aae3e5523a5bcedf516f39a750d57d8ed749d90da", size = 252902, upload-time = "2021-04-18T20:18:10.603Z" }
+
+[[package]]
+name = "route-optimizer"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "astroid" },
+    { name = "autopep8" },
+    { name = "isort" },
+    { name = "lazy-object-proxy" },
+    { name = "mccabe" },
+    { name = "numpy" },
+    { name = "pycodestyle" },
+    { name = "pygame" },
+    { name = "rope" },
+    { name = "toml" },
+    { name = "typing" },
+    { name = "wrapt" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "astroid", specifier = "==2.5.6" },
+    { name = "autopep8", specifier = "==1.5.7" },
+    { name = "isort", specifier = "==5.8.0" },
+    { name = "lazy-object-proxy", specifier = "==1.6.0" },
+    { name = "mccabe", specifier = "==0.6.1" },
+    { name = "numpy", specifier = "==1.20.3" },
+    { name = "pycodestyle", specifier = "==2.7.0" },
+    { name = "pygame", specifier = "==2.0.1" },
+    { name = "rope", specifier = "==0.19.0" },
+    { name = "toml", specifier = "==0.10.2" },
+    { name = "typing", specifier = "==3.7.4.3" },
+    { name = "wrapt", specifier = "==1.12.1" },
+]
+
+[[package]]
+name = "toml"
+version = "0.10.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f", size = 22253, upload-time = "2020-11-01T01:40:22.204Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b", size = 16588, upload-time = "2020-11-01T01:40:20.672Z" },
+]
+
+[[package]]
+name = "typing"
+version = "3.7.4.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/05/d9/6eebe19d46bd05360c9a9aae822e67a80f9242aabbfc58b641b957546607/typing-3.7.4.3.tar.gz", hash = "sha256:1187fb9c82fd670d10aa07bbb6cfcfe4bdda42d6fab8d5134f04e8c4d0b71cc9", size = 78592, upload-time = "2020-07-13T23:19:43.758Z" }
+
+[[package]]
+name = "wrapt"
+version = "1.12.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/82/f7/e43cefbe88c5fd371f4cf0cf5eb3feccd07515af9fd6cf7dbf1d1793a797/wrapt-1.12.1.tar.gz", hash = "sha256:b62ffa81fb85f4332a4f609cab4ac40709470da05643a082ec1eb88e6d9b97d7", size = 27488, upload-time = "2020-03-09T02:32:04.07Z" }
